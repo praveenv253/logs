@@ -1,24 +1,477 @@
-Thursday | 11 Jul 2013 | 21:44:00 | GMT+0530
-Test 8. 
+Thursday | 11 Jul 2013 | 20:32:24 | GMT+0530
+[nvidia] [kernel module] [cuda] You need to reinstall the driver every time you update your linux kernel. This is so that the nvidia kernel module is correctly created inside the appropriate kernel folder. Uninstallation is achieved with "installer.run --uninstall". Reinstallation can be done as usual with "installer.run --optimus" and then selecting the driver for installtion. 
 
-Thursday | 11 Jul 2013 | 21:40:50 | GMT+0530
-Test 7. 
+Thursday | 11 Jul 2013 | 13:55:23 | GMT+0530
+[git] [diff] [tab] Customize the tab stop size in git diff by using $ git config --global core.pager "less -x5,9". man less to look at all options. 
 
-Thursday | 11 Jul 2013 | 21:39:57 | GMT+0530
-Test 6. 
+Friday | 05 Jul 2013 | 18:18:59 | GMT+0530
+[cuda-gdb] [printf] [cuPrintf] Dont use it. Just dont. Tried and failed far too many times. Use printf instead. It overloads the printf defined by cstdio, so you have to include cstdio for it to work. Also note, cuPrintf is some compatibility thing for compute capability < 2.x. We dont need to worry about it. 
 
-Thursday | 11 Jul 2013 | 21:29:46 | GMT+0530
-Test 5. 
+Thursday | 04 Jul 2013 | 14:04:30 | GMT+0530
+[nvidia] [cuda] [suspend] [kernel module] So I was facing this problem wherein the nvidia kernel module seemed to be getting unloaded after the computer was put to sleep. This can be resolved by explicitly adding the nvidia kernel module to the list of modules unloaded and reloaded before/after suspend. You do this by editing/creating the file /etc/pm/config.d/unload_modules. In it, add the following line: SUSPEND_MODULES="$SUSPEND_MODULES nvidia". And thats it! Putting the computer to sleep now will not interfere with cuda executability! http://www.techytalk.info/ubuntu-fix-network-stopped-working-after-resume-from-sleep/
 
-Thursday | 11 Jul 2013 | 21:28:23 | GMT+0530
-Test 4. 
+Saturday | 29 Jun 2013 | 11:53:43 | GMT+0530
+[ldd] [object files] [libraries] [dependencies] man ldd. ldd prints shared library dependencies. Useful for checking if you got the order of your arguments wrong while invoking g++ 
 
-Thursday | 11 Jul 2013 | 21:26:32 | GMT+0530
-Test 3. 
+Saturday | 29 Jun 2013 | 11:52:07 | GMT+0530
+[nm] [object files] [symbols] man nm. nm lists symbols from object files. Grep the output in order to search for a certain symbol 
 
-Thursday | 11 Jul 2013 | 21:20:19 | GMT+0530
-Another test message. 
+Tuesday | 18 Jun 2013 | 22:17:01 | GMT+0530
+[less] [colour] [grep] In order to retain colours when passing output through less, use the -R option. Also ensure that the program sending output is configured to send out colour even if it detects that the output is going to a pipe and not to stdout. For eg. grep will give you colour through a pipe only if you use the --color=always command line argument. --color=auto does not do so. 
 
-Thursday | 11 Jul 2013 | 21:11:01 | GMT+0530
-Testing the new logfile. 
+Monday | 17 Jun 2013 | 18:35:03 | GMT+0530
+Make sure you take some time out to properly learn bash if conditions and for loops. They can be extremely useful, especially for doing complex things to all files in a directory hierarchy that meet certain conditions, etc. 
+
+Wednesday | 12 Jun 2013 | 19:15:07 | GMT+0530
+Read up about how GPU memory accesses work! Need to refresh memory badly!! Read up about coalesced access and as to whether or not many threads can simultaneously read and write from global memory. Figure out exactly what "higher memory bandwidth of the GPU" is, in quantitative terms! 
+
+Monday | 10 Jun 2013 | 17:30:44 | GMT+0530
+[options] [menu] [remap keyboard] It finally works!!! So the reason the keyboard remapping was not working the last time I had tried was because the stupid PrtSc effect kept coming in the way. Once I got rid of the screenshot problem, it was smooth sailing, really! Just follow the instructions given here: http://askubuntu.com/questions/24916/how-do-i-remap-certain-keys. 
+
+Monday | 10 Jun 2013 | 17:20:46 | GMT+0530
+[alt] [HUD] The way to stop the HUD from popping up every time you accidentally press the alt key is similar. Go to System Settings -> Keyboard -> Shortcuts -> Launchers. Disable with backspace. 
+
+Monday | 10 Jun 2013 | 17:19:37 | GMT+0530
+[prtsc] [menu] [options] Okay, I havent managed to get the menu/options button working yet, but at least it doesnt keep activating print screen accidentally. The way to get rid of it is to go to System Settings -> Keyboard -> Shortcuts -> Screenshots. Can be reassigned there. 
+
+Thursday | 06 Jun 2013 | 23:00:57 | GMT+0530
+And to go one step beyond this as well: There is likely to be some bias because of the error in the uniformity of the random function itself. It may be more skewed towards lower numbers or something like that. A good experiment would be to try to correct for the error caused by this bias by measuring this error directly and then compensating for it. More thought is required before this idea is solid, but I think it is something worth exploring. 
+
+Thursday | 06 Jun 2013 | 22:58:17 | GMT+0530
+Going further with Monte Carlo: So far I have come up to the point of doing a vectorized implementation, and an error scaling experiment that I really have not given enough thought to. So firstly, for the error scaling experiment, what I really should be doing is to find the standard deviation from the mean for each given number of points. Then, we should see how this scales as the number of points increases. This is a far better measure of the "error" than whatever it is that I am currently doing. 
+
+Thursday | 06 Jun 2013 | 15:37:14 | GMT+0530
+So I finally have all the elements I need to carry out this gargantuan task of creating a website and populating it with data. It is absolutely essential that I have enough content matter to put in the blog though. Otherwise it will just look sad. 
+
+Thursday | 06 Jun 2013 | 15:35:13 | GMT+0530
+[gist-it] [embedding code] Good lord! I was struggling for so long to get a github file and embed it in a web-page. Turns out there is a simple tool which does it for you! The tool is called gist-it, and it really cannot get simpler than this. 
+
+Wednesday | 05 Jun 2013 | 22:25:11 | GMT+0530
+[syntaxhighlighter] SyntaxHighlighter looks pretty easy too. 
+
+Wednesday | 05 Jun 2013 | 21:39:03 | GMT+0530
+[mathjax] Getting mathjax to work using the cdn is a piece of cake on a hand-made website. 
+
+Tuesday | 04 Jun 2013 | 21:48:45 | GMT+0530
+Crux of the day: I made a workflow plan, and it is working! At least, as of now. It will take a while before I get stuck. Then we shall see... 
+
+Tuesday | 04 Jun 2013 | 18:26:21 | GMT+0530
+[python] [unit test] [unittest] I kept coming across unit tests in Django and not knowing what the hell they were. It appears that unit tests are actually python things, not restricted to only Django. http://docs.python.org/2/library/unittest.html. Incidentally, django has also come up with a test framework tutorial: https://docs.djangoproject.com/en/1.5/intro/tutorial05/ 
+
+Tuesday | 04 Jun 2013 | 17:13:47 | GMT+0530
+[apt] (contd.) Do a man apt-cache. It is too awesome! How the hell did I never figure this out? All I would have to have done was a man apt in order to find out about this program! 
+
+Tuesday | 04 Jun 2013 | 17:05:13 | GMT+0530
+[apt] So I finally figured out how to search for what is there in the damned apt cache on your own computer. Do an apt-cache search <pkgname>! 
+
+Tuesday | 04 Jun 2013 | 16:48:41 | GMT+0530
+Refer ~/Documents/Intern/NCBS/daily-logs/4-6-13 for info regarding today's notes. Had a lot of things to write... 
+
+Tuesday | 04 Jun 2013 | 15:24:16 | GMT+0530
+Learnt a bit of subversion today. Cant say I am much better off compared to where I started. But at least my confidence level with the tool has increased marginally. 
+
+Tuesday | 04 Jun 2013 | 15:17:07 | GMT+0530
+Wrt NCBS, I am generally groping in the dark. This is not at all a good idea. If I am not sure as to what is to be done so that I can properly start, then at the very least I should begin by making a document of what I need to do. This will give me some sort of roadmap to follow. 
+
+Tuesday | 04 Jun 2013 | 12:15:55 | GMT+0530
+[ipython] [config] For ipython configuration information, do ipython config -h. The default ipython profile is located in ~/.config/ipython. This is not present until generated for the first time. To generate, use ipython profile create. 
+
+Monday | 03 Jun 2013 | 22:19:21 | GMT+0530
+Reminder: Install gimp. 
+
+Monday | 03 Jun 2013 | 15:53:09 | GMT+0530
+This is a good Hines method tutorial: http://www.caam.rice.edu/~cox/neuro/nan06brnotes.pdf 
+
+Monday | 03 Jun 2013 | 10:46:07 | GMT+0530
+[bash] [bash completion] If you want to install a new completion file, for example django_bash_completion, then simply add the script to /etc/bash_completion.d/. The rest is taken care of 
+
+Monday | 03 Jun 2013 | 08:00:03 | GMT+0530
+This is a site that I shall be creating on the elec server itself, considering that blogspot and wordpress have proven to be deficient for displaying latex and code. First, I need to decide what I am going to write about. Only once this is done can I possibly decide the design or whatever else. 
+
+Sunday | 02 Jun 2013 | 21:33:19 | GMT+0530
+Why have I started treating this logfile like a diary? This is not a good idea, is it? 
+
+Sunday | 02 Jun 2013 | 21:32:49 | GMT+0530
+I need to make design plans as well as plans for content. Initial design plans simply involve bootstrap. I have no high-flying goals in this respect. However, uniqueness is always an important aspect in this business, viz. advertising. 
+
+Sunday | 02 Jun 2013 | 21:30:45 | GMT+0530
+For a long time I have been turning the idea of having a technical blog around in my head. The idea is most certainly worthy of credit, considering the number of esoteric items of interest to computer enthusiasts I happen to come across on a routine basis. However, I have not been allowed the time to carry out such an undertaking. But finally, now in summer, I may have a chance. The idea was to write one article per night. I do not know how feasible this is. But if I am to have a chance at a good college in graduate school, then I have to try. 
+
+Sunday | 02 Jun 2013 | 21:27:19 | GMT+0530
+In the meantime, it is also important that I get started with building a profile for myself. In due course of time, I will have to write a statement of purpose for applying to universities abroad. First and foremost, I will have to decide what I want to do. 
+
+Saturday | 01 Jun 2013 | 16:28:29 | GMT+0530
+Started reading the Hines paper again, but it looks like I will need at least a little bit of knowledge about numerical methods like Crank Nicolson before I can fully appreciate it. Nevertheless, I can at least try to get a vague idea and then correlate equations between the paper and the code. 
+
+Saturday | 01 Jun 2013 | 16:09:16 | GMT+0530
+Spent some more time going through the moose code. Along the way I found this README file in the hsolve folder that I hadnt noticed before. This file directed me to moose/Docs/developer/hsolve-developer-overview.cpp. This was the doc file that Niraj had made long ago and the one I had completely forgotten about. Turns out that it is pretty good. Now that I have read the objects present in hsolve, it proves much easier to understand. It also gives a chronological calling order of sorts, which could be useful. 
+
+Saturday | 01 Jun 2013 | 16:06:17 | GMT+0530
+Tried to get some of the sample code working so that I could examine the gpu information. I copied the samples from the IIT Microwave lab into the NCBS computer for this. However, attempts failed due to ld not being able to find -lcuda. 
+
+Saturday | 01 Jun 2013 | 11:53:18 | GMT+0530
+So I was wrong. In fact, Raphaels solver does transfer only the spike information. However, even this ends up consuming a huge fraction of time as the number of interneuronal connections increases. 
+
+Wednesday | 29 May 2013 | 20:52:17 | GMT+0530
+[cuda] [drivers] Remember! https://wiki.ubuntu.com/Kernel/LTSEnablementStack. xserver-xorg-lts-quantal is not compatible with libgl1-mesa-glx or libgl1-mesa-dri. You need to use libgl1-mesa-glx-lts-quantal and libgl1-mesa-dri-lts-quantal. Failure to do so will cause xserver to get uninstalled during the installation of libgl1-mesa-glx! Reinstallation of the xserver may prove successful to some extent, but you will face resolution issues and what not. Not figured out how to correct those problems yet. 
+
+Monday | 27 May 2013 | 11:56:30 | GMT+0530
+Cinfo is a class used to store information about other classes. 
+
+Monday | 27 May 2013 | 11:55:59 | GMT+0530
+At NCBS for the summer. Most of the following will be NCBS-related. 
+
+Monday | 27 May 2013 | 11:21:05 | GMT+0530
+Testing after OS reinstall. 27-5-13. 11:20 AM. 
+
+Monday | 13 May 2013 | 10:22:08 | GMT+0530
+[python] [sound] Install Tcl/Tk and python-tksnack. Then open python with padsp to get ALSA into OSS compatibility mode. Python will now be able to see a /dev/dsp, even though its not really there. Writing to /dev/dsp will send sound out through the speakers. But tksnack takes care of all that. Look at http://www.speech.kth.se/snack/#introex and http://www.speech.kth.se/snack/man/snack2.2/python-man.html.
+
+Monday | 29 Apr 2013 | 09:43:07 | GMT+0530
+[LaTeX] [LyX] [IEEE template] Instructions on how to set up the IEEE article format in LyX: http://plone.cs.luc.edu/users/gkt/writing/how_to/lyx_ieee 
+
+Friday | 26 Apr 2013 | 02:09:07 | GMT+0530
+For the bridge problem, try contracting loops into single nodes. Try doing this even as you read the input. 
+
+Thursday | 18 Apr 2013 | 22:11:15 | GMT+0530
+Do NOT try to create a comment macro. You cannot do something like #define COMMENT //. This is because gcc strips out comments before doing preprocessing. 
+
+Thursday | 28 Mar 2013 | 17:16:53 | GMT+0530
+Visiting NCBS. Making separate documents outlining what happened on each day. Take a look at those in order to know what happened. Will log where I put them, once I archive them. 
+
+Saturday | 16 Mar 2013 | 14:43:52 | GMT+0530
+[unicode] To find unicode characters by drawing, use shapecatcher.com 
+
+Saturday | 16 Mar 2013 | 14:18:06 | GMT+0530
+[latex] Website to find latex commands by drawing: detexify.kirelabs.org 
+
+Wednesday | 27 Feb 2013 | 19:44:40 | GMT+0530
+But this also bodes ill, because it means that the error in the program is elsewhere, and I need to find it. 
+
+Wednesday | 27 Feb 2013 | 19:44:20 | GMT+0530
+This bodes well in some sense because now I dont have to rewrite code in order to halve the indices everywhere I used the same syntax. 
+
+Wednesday | 27 Feb 2013 | 19:43:41 | GMT+0530
+Utter stupidity. So I finally found out my real mistake. I had added index to E_phi twice. As a result of that it was going to 100,100 instead of 50,50. Therefore, no double-float problem. 
+
+Wednesday | 27 Feb 2013 | 00:41:35 | GMT+0530
+Here are a list of the first ten relative errors, for reference: 1.58749955799e-06 1.0 1.0 1.0 1.0 10378.560793 133926374.435 322906876274.0 2.70622543036e+12 1.28283543045e+13 
+
+Wednesday | 27 Feb 2013 | 00:40:11 | GMT+0530
+If this indexing scheme has to be replaced everywhere, it promises to be extremely tedious. The worst part is that I still do not understand why this is happening at all. Stackoverflow did not yield any answers when I tried some simple queries. Maybe more searching will help. 
+
+Wednesday | 27 Feb 2013 | 00:38:46 | GMT+0530
+There could be multiple reasons for this. The most immediate reason that reveals itself is the fact that I have used the same kind of pointer arithmetic all over the program. This is probably causing severe indexing problems. It is rather strange that all these indexing errors did not show up on cuda-memcheck. But then perhaps the same thing that caused the error also was the culprit here in preventing it from being seen. 
+
+Wednesday | 27 Feb 2013 | 00:36:24 | GMT+0530
+A simple code snippet to list out the maximum relative error shows disastrous results. The relative error is 100% starting from time step 1, and increases to more than 100% from time step 5 onwards. This increase is practically exponential. 
+
+Wednesday | 27 Feb 2013 | 00:30:32 | GMT+0530
+However, even upon using a source location of 25,25, the program itself is not yielding the correct plots. There is still work left to do. 
+
+Tuesday | 26 Feb 2013 | 23:41:02 | GMT+0530
+So the problem was to do with indexing after all. Probably some double-float confusion. We need to figure out exactly what is going on so that a deterministic solution can be arrived at. 
+
+Tuesday | 26 Feb 2013 | 23:40:22 | GMT+0530
+The max absolute value of the difference is now 1.9591332045152884e-10 :D 
+
+Tuesday | 26 Feb 2013 | 23:38:05 | GMT+0530
+In order to find out for sure, I am now implementing the same faulty program, but with source point set to 25,25. Lets see what happens now... 
+
+Tuesday | 26 Feb 2013 | 23:36:46 | GMT+0530
+This might be due to addition of a constant to a pointer. The pointer itself is supposed to be of float type, but for some strange reason, 8 bytes might be getting added instead of 4. If so, that would explain a lot, including why I kept seeing the gaussian trying to start propagating from the left top corner of the mesh. 
+
+Tuesday | 26 Feb 2013 | 23:35:01 | GMT+0530
+Closer inspection reveals that the python array is initialized at 50,50 as expected, whereas the cuda array has been initialized with the source at 100,100! 
+
+Tuesday | 26 Feb 2013 | 23:34:11 | GMT+0530
+Relative error for time step 0 is 100%! Damn! 
+
+Tuesday | 26 Feb 2013 | 23:33:40 | GMT+0530
+Getting rid of the zeros for the first few matrices by using sp.where... 
+
+Tuesday | 26 Feb 2013 | 23:25:00 | GMT+0530
+Absolute error keeps increasing with time, as expected. Need to determine maximum relative error in order to determine severity. But for that, I need to get rid of the zeros. 
+
+Tuesday | 26 Feb 2013 | 23:23:49 | GMT+0530
+Took output from both python and cuda code for field matrices. Comparing them by opening them using scipy.loadtxt in python, then taking max of the absolute value of the difference. 
+
+Tuesday | 26 Feb 2013 | 22:01:33 | GMT+0530
+Errors in h-matrices are all quite small. Will now proceed to check field matrices at different points in time. 
+
+Tuesday | 26 Feb 2013 | 22:00:41 | GMT+0530
+delta h_mu: abs=2.99, rel=2.3% 
+
+Tuesday | 26 Feb 2013 | 21:59:19 | GMT+0530
+delta h_phi: abs=0.029, rel=0.77% 
+
+Tuesday | 26 Feb 2013 | 21:58:43 | GMT+0530
+delta h_nu: abs=0.44, rel=1.55% 
+
+Tuesday | 26 Feb 2013 | 21:57:21 | GMT+0530
+Then proceeded to compare matrices. Starting with the h-matrices. 
+
+Tuesday | 26 Feb 2013 | 21:57:05 | GMT+0530
+Did a preliminary check to ensure that the code fragments were similar 
+
+Tuesday | 26 Feb 2013 | 21:56:44 | GMT+0530
+Finally got around to actually comparing the matrices produced by the CUDA and python code. 
+
+Monday | 25 Feb 2013 | 23:23:42 | GMT+0530
+The solution to this can be tracked down at least in part by checking all the constant matrices that are generated at the beginning first. That is, compare r, sin_theta and the h-matrices with what we got using the python code. All this promises to be very painful to do, however. 
+
+Monday | 25 Feb 2013 | 23:22:14 | GMT+0530
+However, the output itself is not completely correct yet. The matrices are no longer remaining zero, but the source does not propagate. Evidently, there is some mistake in one of the update equations, or possibly in thread synchronization. 
+
+Monday | 25 Feb 2013 | 23:20:02 | GMT+0530
+Finally managed to figure out what the error was. It turned out that program didnt like the idea of fractional indices which were implicitly type cast to int for some weird reason. Therefore, I could not use something like NU_SIZE/2 for the source location. Changing this to an actual integer fixed the problem. 
+
+Tuesday | 05 Feb 2013 | 23:04:19 | GMT+0530
+Compiled all logs regarding cuda fdtd project. Document created. 
+
+Thursday | 31 Jan 2013 | 00:35:53 | GMT+0530
+Note how I am being rather bent on the idea that the error is necessarily to do with compilation and so on, and not to do with the update equations. The only way to check the update equations themselves would be to print out each matrix separately and then go through them one by one. The very idea is thoroughly repulsive. 
+
+Thursday | 31 Jan 2013 | 00:34:29 | GMT+0530
+Going back to __powf and using -use_fast_math to compile does not work either. 
+
+Thursday | 31 Jan 2013 | 00:31:42 | GMT+0530
+cmath does not appear to be making much of a difference. The output is still all zeros. 
+
+Thursday | 31 Jan 2013 | 00:00:27 | GMT+0530
+So I compile it for 20 and 21. But it still does not work. In fact, it gives me the same error. In desparation, I try to omit the architecture specification in the compile command altogether. But now of course, I get the age old and most irritating "Single stepping until exit from function __kernel_vsyscall, which has no line number information" in gdb. In short, still under the (possibly wrong) assumption that the issue is with __powf, I am proceeding to replace all occurrences of __powf with the C math library version, which supposedly runs in device functions - according to the nvidia programming guide. Lets see how that goes. 
+
+Wednesday | 30 Jan 2013 | 23:55:12 | GMT+0530
+So what do we do? I noticed that gdb exited at the first kernel call, which computes the r-theta coordinates from the nu-mu coordinates. Now one of the functions I used here was __powf. I remembered reading elsewhere that __powf has been newly added to the set of functions that cuda supports (also noting that gedit did not consider it a keyword for syntax highlighting until I set it as such). So I attempted to compile the code for a higher architecture version. However, compute_21 and sm_21 simply did not work. And guess what? nvcc does not have a man page. Typical. So I went looking for the official nvcc documentation, which somehow also proved to be extremely hard to find. Ultimately, I did find it though, and here is what it had to say. Currently, supported virtual architectures are compute_20 and supported GPU architectures are sm_21. Talk about confusing terminology. And why would they not have a compute_21? At least a link? It defeats me. 
+
+Wednesday | 30 Jan 2013 | 23:49:02 | GMT+0530
+So here's the update on how the cuda debugging is going. What I have done is to attempt to use cuda-gdb to figure out what is going wrong. cuda-gdb turns out to be a horribly intractable piece of executable that does little more than crash time after time. However, upon using gdb on a program compiled using the arch=compute_20,code=sm_20 options, it turns out that there is a certain CUDA API error, with error code 0x8. Having spent a considerable amount of time trying to decode this cryptic error message, I managed to find a toolkit reference document which gave me the error mappings - in no easy to find form, I might add. It turns out that the error means cudaErrorInvalidDeviceFunction. That is, The requested device function does not exist or is not compiled for the proper device architecture.
+
+Tuesday | 29 Jan 2013 | 00:07:47 | GMT+0530
+However, the CUDA implementation is _still_ not working. Different source locations give extremely different results. This needs to be interpreted. Probably the next step should be to take the python matrices and correlate with the cuda matrices. However, this will require extraction of the cuda matrices from device memory, which promises to be painful. 
+
+Monday | 28 Jan 2013 | 23:33:08 | GMT+0530
+Out of sheer stupidity, it turns out that I had repeated the same mistake I had made before, namely, giving values to nu and mu that were totally out of range. As a result the r, theta and h matrices were becoming full of nans. 
+
+Monday | 28 Jan 2013 | 19:02:20 | GMT+0530
+[gedit][colorscheme][colourscheme] The default colour schemes and language specs can be found under /usr/share/gtksourceview-3.0/ 
+
+Monday | 28 Jan 2013 | 18:59:48 | GMT+0530
+[gedit][colorscheme][colourscheme] The gedit colour scheme file must be placed in ~/.local/share/gedit/styles. 
+
+Monday | 28 Jan 2013 | 00:30:13 | GMT+0530
+Frequency at which we can store data thus appears to be poor at present. Although what is more important currently is dispersion error, which is far too great to ignore. 
+
+Monday | 28 Jan 2013 | 00:28:29 | GMT+0530
+What is worse, this is an unoptimized version of the code, meaning that the kernels are only likely to get faster, whereas the file write is going to sit at pretty much where it currently is. 
+
+Monday | 28 Jan 2013 | 00:27:14 | GMT+0530
+In other words, we can update about 45 times in the same time that we can write E_phi to file once. And this is for a 128x128 array... 
+
+Monday | 28 Jan 2013 | 00:26:34 | GMT+0530
+Considering that the update equations happen pairwise and that the H_nu, H_mu, E_phi is the longer stream, this becomes the rate limiting update step. The total time taken by these three is roughly 1ms. 
+
+Monday | 28 Jan 2013 | 00:24:36 | GMT+0530
+What is not negligible, of course, is the time taken to write to file. If we calculate this to be the time at finish of memcpy and before start of the next update H_nu, it takes about 45ms. 
+
+Monday | 28 Jan 2013 | 00:21:30 | GMT+0530
+The synchronous memory copy from device to host for E_phi then takes only about 12 to 13us, which is practically negligible. 
+
+Monday | 28 Jan 2013 | 00:19:30 | GMT+0530
+The update equations take between 200us and 500us to complete, with E_phi being the most at around 515us. 
+
+Monday | 28 Jan 2013 | 00:18:07 | GMT+0530
+Profiled using nvvp the other day. So, profile results are in. 
+
+Wednesday | 23 Jan 2013 | 23:11:19 | GMT+0530
+nvvp, the nvidia visual profiler, only works if there are no weird errors. For example, all severe memory errors should be taken care of first. 
+
+Wednesday | 23 Jan 2013 | 22:54:06 | GMT+0530
+When storing matrices as a 1D array, make sure that the column width of the *appropriate* matrix is used in order to compute the index. 
+
+Wednesday | 23 Jan 2013 | 22:52:39 | GMT+0530
+Many errors turn out to be because of incorrect memory allocation and access. Use cuda-memcheck to identify these. 
+
+Wednesday | 23 Jan 2013 | 22:52:04 | GMT+0530
+Resolved many cuda errors today 
+
+Wednesday | 23 Jan 2013 | 22:51:52 | GMT+0530
+The program isnt working yet 
+
+Wednesday | 23 Jan 2013 | 22:51:38 | GMT+0530
+Done with initial stage of documentation and cuda implementation 
+
+Thursday | 17 Jan 2013 | 19:01:51 | GMT+0530
+First, need to document implementation procedure 
+
+Wednesday | 16 Jan 2013 | 19:40:19 | GMT+0530
+Need to start implementing the dipole coordinates in cuda 
+
+Thursday | 27 Dec 2012 | 13:12:16 | GMT+0530
+Dipole implementation fixed! Problem was to do with the ranges of mu and nu. I had specified arbitrary ranges. The ranges are now more apt. The grid has also been made finer in the process. 
+
+Thursday | 27 Dec 2012 | 00:56:22 | GMT+0530
+Tried other points for source. Still the same results. Text output logging shows that cells outside of the starting angle also receive values, only very small ones. 
+
+Wednesday | 26 Dec 2012 | 20:02:14 | GMT+0530
+Discovered b-calm software which is a GPU implementation of FDTD with variable meshing, user defined excitation, etc. 
+
+Wednesday | 26 Dec 2012 | 20:01:25 | GMT+0530
+I am being stupid. Should try a few more source configurations to figure out whether or not the problem is isolated or general. 
+
+Wednesday | 26 Dec 2012 | 18:33:17 | GMT+0530
+Recording the matrix states at each time step becomes hard to visualise. Instead, making contour plots of H_r and H_phi in parallel with E_z is easier and more effective. 
+
+Wednesday | 26 Dec 2012 | 16:14:11 | GMT+0530
+In order to do a step-by-step debug, ostate of the system as defined by the field matrices should be recorded at every time step 
+
+Wednesday | 26 Dec 2012 | 01:14:31 | GMT+0530
+Next step is to calculate step by step by hand, and see what is going wrong 
+
+Wednesday | 26 Dec 2012 | 01:00:30 | GMT+0530
+There appears to be nothing wrong with the update equations. 
+
+Wednesday | 26 Dec 2012 | 00:06:44 | GMT+0530
+Polar coordinate implementation still does not work for gaussian source not placed at origin. Source does not spread in the phi direction. Potential problem is a mistake in one of the delta-phi related update equations. 
+
+Wednesday | 26 Dec 2012 | 00:05:09 | GMT+0530
+Note that scipy's mgrid function returns only integer valued arrays. In order to give r an arbitrarily small decimal value, you need to type cast it to float by calling sp.array(r, dtype=float) 
+
+Wednesday | 26 Dec 2012 | 00:02:38 | GMT+0530
+Problem fixed by making radial coordinate r start from an arbitrarily small value, rather than zero 
+
+Wednesday | 26 Dec 2012 | 00:01:03 | GMT+0530
+Polar coordinates was also refusing to work for simple gaussian source at origin 
+
+Tuesday | 25 Dec 2012 | 17:49:37 | GMT+0530
+Reducing the level of difficulty of the problem. Trying polar coordinates first 
+
+Monday | 24 Dec 2012 | 19:12:13 | GMT+0530
+By the way, what we are trying to do is to simulate a simple source, eg. gaussian, in 2D space using dipole coordinates. 
+
+Monday | 24 Dec 2012 | 19:11:33 | GMT+0530
+However, it should be noted that the presence of E_mu may really not be required for the given simulation 
+
+Monday | 24 Dec 2012 | 18:59:52 | GMT+0530
+Next step should be to attempt to reintroduce E_mu into the update equations while keeping del()/del(phi) zero. 
+
+Monday | 24 Dec 2012 | 18:48:35 | GMT+0530
+There is a need to go through the Lysak paper and the notes on dipole coordinate systems by Swisdak carefully and resolve the differences in the way they have constructed their coordinates 
+
+Monday | 24 Dec 2012 | 18:45:25 | GMT+0530
+Yet another point I failed to consider earlier is that the nu-coordinate has a negative sign. The effects of this need to be seen. 
+
+Monday | 24 Dec 2012 | 18:43:26 | GMT+0530
+There also appears to be another error in Lysak\'s paper: The negative sign is missing in the curlE equation. 
+
+Monday | 24 Dec 2012 | 18:41:38 | GMT+0530
+Currently E_mu is set to 0 by the paper (Lysak). Need to find out why. There appears to be no good reason to do this. 
+
+Monday | 24 Dec 2012 | 18:40:50 | GMT+0530
+2D implementation of dipole coordinate system is not working 
+
+Monday | 24 Dec 2012 | 18:40:21 | GMT+0530
+Trying out dipole coordinate system 
+
+Monday | 24 Dec 2012 | 18:40:01 | GMT+0530
+Working on computational electromagnetics 
+
+Sunday | 22 Jul 2012 | 16:42:56 | GMT+0530
+Look at http://courses.cms.caltech.edu/cs101gpu/ for a good GPU programming tutorial. Also teaches openGL. 
+
+Thursday | 31 May 2012 | 12:31:03 | GMT+0530
+"xargs -0" reads arguments from the standard input - arguments are delimited by \0's - and passes them as trailing command line arguments to a command passed (with initial arguments if required) as an argument to xargs. 
+
+Thursday | 31 May 2012 | 12:28:48 | GMT+0530
+"find ." displays all files recursively from the current directory 
+
+Thursday | 31 May 2012 | 12:27:16 | GMT+0530
+All of repo's working depends upon its subcommands, which in general need to be specified by the project using repo. The subcommands for b2g can be found in (mozilla-b2g)/B2G/.repo/repo/subcmds 
+
+Wednesday | 30 May 2012 | 17:52:40 | GMT+0530
+./flash.sh gaia 
+
+Wednesday | 30 May 2012 | 17:52:36 | GMT+0530
+./flash.sh 
+
+Wednesday | 30 May 2012 | 17:52:30 | GMT+0530
+./build.sh 
+
+Wednesday | 30 May 2012 | 17:52:25 | GMT+0530
+./config.sh galaxy-s2 
+
+Wednesday | 30 May 2012 | 17:52:05 | GMT+0530
+# this is cloned from http://github.com/mozilla-b2g/B2G.git 
+
+Wednesday | 30 May 2012 | 17:51:50 | GMT+0530
+cd B2G 
+
+Wednesday | 30 May 2012 | 17:50:52 | GMT+0530
+Steps followed were: 
+
+Wednesday | 30 May 2012 | 17:49:25 | GMT+0530
+Successfully ported B2G to Samsung Galaxy S2 for the first time 
+
+Friday | 25 May 2012 | 12:23:29 | GMT+0530
+Find heimdall source in Programs/cloned_repos/ 
+
+Friday | 25 May 2012 | 12:23:12 | GMT+0530
+Removed heimdall v1.3.2 and installed v1.3.1 from source 
+
+Sunday | 20 May 2012 | 22:56:55 | GMT+0530
+Created a few shell commands to do the same - find on gmail with subject "Pulling all repos" 
+
+Sunday | 20 May 2012 | 22:56:11 | GMT+0530
+Found out that make sync does not pull all submodules from upstream 
+
+Sunday | 20 May 2012 | 22:17:27 | GMT+0530
+MSM/QSD Boot to Gecko Enablement project allows users to build a Boot to Gecko-based platform containing additional enhancements for Qualcomm chipsets. - The secret behind boot/msm? Check codeaurora.org for more details. 
+
+Saturday | 19 May 2012 | 19:13:09 | GMT+0530
+Created a summary of functions in gonk/build/envsetup.sh - find in gmail 
+
+Friday | 11 May 2012 | 13:30:09 | GMT+0530
+pcmcia = PC card 
+
+Friday | 11 May 2012 | 12:12:22 | GMT+0530
+kapil.kumar@sasken.com 
+
+Friday | 11 May 2012 | 00:46:45 | GMT+0530
+All this is being done because of the cyclic dependency in adb - first time around, we need to use the Android SDK to make gonk. Subsequently, gonk makes the SDK. 
+
+Friday | 11 May 2012 | 00:45:47 | GMT+0530
+http://developer.android.com/sdk/installing.html - instructions for the android sdk 
+
+Friday | 11 May 2012 | 00:40:00 | GMT+0530
+https://developer.mozilla.org/en/Mozilla/Boot_to_Gecko/Building_B2G_for_Samsung_Galaxy_S2 - this is for galaxy s2 
+
+Friday | 11 May 2012 | 00:39:36 | GMT+0530
+https://developer.mozilla.org/en/Mozilla/Boot_to_Gecko/Setting_Up_Boot_to_Gecko_Build_Environment - this is the main reference page 
+
+Friday | 11 May 2012 | 00:38:43 | GMT+0530
+Stopped downloading stuff at JDK. Need to download from the ADT plugin onwards 
+
+Friday | 11 May 2012 | 00:10:23 | GMT+0530
+We need to target a particular chipset and find out all the steps involved in porting 
+
+Friday | 11 May 2012 | 00:09:00 | GMT+0530
+Presentation on 29th - We need to have the complete "planan" for porting b2g onto a low cost phone 
+
+Thursday | 10 May 2012 | 14:53:00 | GMT+0530
+Avahi daemon helps discover other comps, printers, etc. on a network as soon as you connect 
+
+Wednesday | 09 May 2012 | 15:04:18 | GMT+0530
+Mozilla uses the IPDL - IPC Protocol Definition Language to send messages between its processes and threads 
+
+Wednesday | 09 May 2012 | 14:27:37 | GMT+0530
+Just finished reading http://elinux.org/Android_Booting 
+
+Wednesday | 09 May 2012 | 14:23:35 | GMT+0530
+http://www.yolinux.com/TUTORIALS/LinuxTutorialNetworking.html - Good network configuration tutorial - but only for fedora 
+
+Wednesday | 09 May 2012 | 14:22:20 | GMT+0530
+Copying B2G. 12GB. Not going to finish today. 
+
+Wednesday | 09 May 2012 | 14:10:48 | GMT+0530
+First log message after reinstalling OS 
 
