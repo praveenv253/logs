@@ -1,3 +1,6 @@
+Wednesday | 21 Aug 2013 | 10:26:18 | GMT+0530
+[formatting code] [astyle] astyle automatically formats C and C++ code. It has a whole bunch of options that can be customized to get different kinds of output. Personally, I find "astyle --style=k/r --indent=tab --break-blocks --delete-empty-lines --pad-oper --align-pointer=name --unpad-paren" to my taste to start with 
+
 Tuesday | 20 Aug 2013 | 18:28:19 | GMT+0530
 [taskset] [process] [CPU] man taskset. Lets you set which processor to run a process on. 
 
