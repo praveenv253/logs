@@ -1,3 +1,6 @@
+Thursday | 22 Aug 2013 | 20:57:45 | GMT+0530
+[paragraph] [formatting] [columns] In order to format paragraphs in text files or in comments in code, use the par program. It seems to be exactly what I need in many cases. 
+
 Wednesday | 21 Aug 2013 | 10:26:18 | GMT+0530
 [formatting code] [astyle] astyle automatically formats C and C++ code. It has a whole bunch of options that can be customized to get different kinds of output. Personally, I find "astyle --style=k/r --indent=tab --break-blocks --delete-empty-lines --pad-oper --align-pointer=name --unpad-paren" to my taste to start with 
 
