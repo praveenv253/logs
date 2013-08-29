@@ -1,3 +1,6 @@
+Thursday | 29 Aug 2013 | 19:00:52 | GMT+0530
+[mv] [rename] [renaming multiple files] man rename. It can be used to rename multiple files. Regex and everything. 
+
 Thursday | 22 Aug 2013 | 23:14:45 | GMT+0530
 Also, make the .vim folder into a git repository with submodules. Will help a lot in the long run. 
 
