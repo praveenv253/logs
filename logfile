@@ -1,3 +1,6 @@
+Friday | 13 Sep 2013 | 16:29:33 | GMT+0530
+Was not able to get setitimer to work - i.e., I was not able to print out the final value. 
+
 Friday | 13 Sep 2013 | 16:29:08 | GMT+0530
 [timing] [profiling] man setitimer. Purportedly a better way of timing than clock() 
 
