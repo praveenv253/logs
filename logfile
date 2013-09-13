@@ -1,3 +1,6 @@
+Friday | 13 Sep 2013 | 17:04:17 | GMT+0530
+[timing] [profiling] Use the <chrono> library. std::chrono::high_resolution_clock seems to do the trick. It should be giving me nanosecond resolution, but gives me only microsecond resolution. Nevertheless, better than clock() any day! 
+
 Friday | 13 Sep 2013 | 16:29:33 | GMT+0530
 Was not able to get setitimer to work - i.e., I was not able to print out the final value. 
 
