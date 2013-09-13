@@ -1,3 +1,6 @@
+Friday | 13 Sep 2013 | 16:29:08 | GMT+0530
+[timing] [profiling] man setitimer. Purportedly a better way of timing than clock() 
+
 Friday | 30 Aug 2013 | 18:19:12 | GMT+0530
 [profiling code] [optimizing] The random-pausing technique: http://stackoverflow.com/questions/375913/what-can-i-use-to-profile-c-code-in-linux/378024#378024 
 
