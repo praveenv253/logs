@@ -1,3 +1,6 @@
+Friday | 13 Sep 2013 | 18:01:01 | GMT+0530
+[chrono] [timing] Dug a little deeper into outputting time durations. It turns out that time_point has a default accuracy that is system-implementation-dependent or something. My system seems to be only microsecond accurate. Read this for more info: http://stackoverflow.com/questions/15777073/how-do-you-print-a-c11-time-point 
+
 Friday | 13 Sep 2013 | 17:04:17 | GMT+0530
 [timing] [profiling] Use the <chrono> library. std::chrono::high_resolution_clock seems to do the trick. It should be giving me nanosecond resolution, but gives me only microsecond resolution. Nevertheless, better than clock() any day! 
 
