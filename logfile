@@ -1,3 +1,6 @@
+Friday | 20 Sep 2013 | 22:09:00 | GMT+0530
+[gvim] [gedit] [default gui editor] To change the default GUI editor, you simply need to change the corresponding records in the file /usr/share/applications/defaults.list. I just went there and did a :%s/gedit/gvim/g in order to get text files to open in gvim instead of in gedit. 
+
 Sunday | 15 Sep 2013 | 17:33:16 | GMT+0530
 [vim] [filetype] If vim does not detect a filetype correctly, then you can add a modeline at the top of the file (first or second line, I think), which tells vim the filetype. For example, when the tex class file mycv.cls was incorrectly detected (as a Java class file, I presume), I added the modeline "% vim: set filetype=tex :" right at the top. This resolved the problem. Do a :help filetype for more info. 
 
