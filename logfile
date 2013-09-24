@@ -1,3 +1,6 @@
+Tuesday | 24 Sep 2013 | 22:20:30 | GMT+0530
+[kbhit] [getch] [conio] Found an SO answer that gives a unix implementation of conio functions! http://stackoverflow.com/a/448982/525169. I implemented a test code for it here: https://github.com/praveenv253/tests/tree/master/nonblockinginput 
+
 Friday | 20 Sep 2013 | 22:09:00 | GMT+0530
 [gvim] [gedit] [default gui editor] To change the default GUI editor, you simply need to change the corresponding records in the file /usr/share/applications/defaults.list. I just went there and did a :%s/gedit/gvim/g in order to get text files to open in gvim instead of in gedit. 
 
