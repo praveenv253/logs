@@ -1,3 +1,6 @@
+Thursday | 26 Sep 2013 | 21:29:55 | GMT+0530
+[artha] [thesaurus] [wordnet] Apparently, Artha uses a backend program called wn, which is a cli to the WordNet lexical database. man wn for more. 
+
 Tuesday | 24 Sep 2013 | 22:20:30 | GMT+0530
 [kbhit] [getch] [conio] Found an SO answer that gives a unix implementation of conio functions! http://stackoverflow.com/a/448982/525169. I implemented a test code for it here: https://github.com/praveenv253/tests/tree/master/nonblockinginput 
 
