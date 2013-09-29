@@ -1,3 +1,6 @@
+Sunday | 29 Sep 2013 | 16:56:07 | GMT+0530
+[vim] [word count] Use g<C-g> to find the word count of a document. Also works in visual mode. 
+
 Thursday | 26 Sep 2013 | 21:29:55 | GMT+0530
 [artha] [thesaurus] [wordnet] Apparently, Artha uses a backend program called wn, which is a cli to the WordNet lexical database. man wn for more. 
 
