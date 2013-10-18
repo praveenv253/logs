@@ -1,3 +1,6 @@
+Friday | 18 Oct 2013 | 23:52:18 | GMT+0530
+[vim] [pdf] [ps] Export a vim file in whole or in part to postscript using ":hardcopy >file.ps". Then use "ps2pdf <file.ps>" to convert to pdf. 
+
 Thursday | 03 Oct 2013 | 18:31:37 | GMT+0530
 [matplotlib] [xkcd style plots] http://jakevdp.github.io/blog/2013/07/10/XKCD-plots-in-matplotlib/ 
 
