@@ -1,3 +1,6 @@
+Friday | 01 Nov 2013 | 19:26:54 | GMT+0530
+[latex] [lyx] [installing fonts] [texmf] Look at http://tex.stackexchange.com/questions/88423/manual-font-installation to install fonts in latex/lyx manually. 
+
 Friday | 18 Oct 2013 | 23:52:18 | GMT+0530
 [vim] [pdf] [ps] Export a vim file in whole or in part to postscript using ":hardcopy >file.ps". Then use "ps2pdf <file.ps>" to convert to pdf. 
 
