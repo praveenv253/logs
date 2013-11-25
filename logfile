@@ -1,3 +1,6 @@
+Monday | 25 Nov 2013 | 21:03:27 | GMT+0530
+[matlab] [scipy] [convert] Look at this SO question to convert matlab code into python/scipy/numpy: http://stackoverflow.com/q/9845292/525169 
+
 Monday | 25 Nov 2013 | 17:19:46 | GMT+0530
 [python] [binary representation] Use the builtin bin() function to convert integers to binary. Use int(binary_repr, 2) to convert back. 
 
