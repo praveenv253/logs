@@ -1,3 +1,6 @@
+Friday | 06 Dec 2013 | 10:41:19 | GMT+0530
+[lyx] [hyperlinks] [color] To change the colours of hyperlinks from the default pink, put "\hypersetup{urlcolor=blue}" in the LaTeX preamble. Check these out for more options: http://tex.stackexchange.com/questions/82531/how-to-change-hyperlinks-color-lyx and http://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks 
+
 Monday | 25 Nov 2013 | 21:03:27 | GMT+0530
 [matlab] [scipy] [convert] Look at this SO question to convert matlab code into python/scipy/numpy: http://stackoverflow.com/q/9845292/525169 
 
