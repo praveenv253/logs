@@ -1,3 +1,6 @@
+Monday | 23 Dec 2013 | 10:23:35 | GMT+0530
+[cpp] [man] [c++] In order to look at the C++ man pages, do a man std_<blah>. For example, man std_list or man std_complex. To see what man pages are available, do an apropos -r "^std_" | grep <blah>. Note that these man pages are available only after you have installed libstdc++6-x.x-doc. 
+
 Friday | 06 Dec 2013 | 10:41:19 | GMT+0530
 [lyx] [hyperlinks] [color] To change the colours of hyperlinks from the default pink, put "\hypersetup{urlcolor=blue}" in the LaTeX preamble. Check these out for more options: http://tex.stackexchange.com/questions/82531/how-to-change-hyperlinks-color-lyx and http://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks 
 
