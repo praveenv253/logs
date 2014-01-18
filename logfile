@@ -1,3 +1,6 @@
+Saturday | 18 Jan 2014 | 16:54:56 | GMT+0530
+[vim] [ascii] To insert characters with a certain ascii code in vim, use <C-v><code>. For example, <C-v>178 will print the squared symbol. I think only three digit codes are supported, since ascii has only 256 characters. 
+
 Saturday | 18 Jan 2014 | 16:52:39 | GMT+0530
 [vim] [hex] [binary files] To open binary files in a readable format, use vim -b. A more complex tool is xxd. Look at http://vim.wikia.com/wiki/Hex_dump or man xxd for more info. 
 
