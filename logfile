@@ -1,3 +1,6 @@
+Saturday | 18 Jan 2014 | 16:52:39 | GMT+0530
+[vim] [hex] [binary files] To open binary files in a readable format, use vim -b. A more complex tool is xxd. Look at http://vim.wikia.com/wiki/Hex_dump or man xxd for more info. 
+
 Thursday | 09 Jan 2014 | 23:10:39 | GMT+0530
 [vim] [substitution] [search] [registers] You can substitute the last search pattern in vim either by omitting the search pattern in the :%s command, or by inserting the contents of the search register onto the command line using <C-r>/. <C-r><reg> can be used anywhere to insert the contents of any register <reg>. In this case, the / register contains the last search pattern. 
 
