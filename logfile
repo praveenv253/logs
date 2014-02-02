@@ -1,3 +1,6 @@
+Sunday | 02 Feb 2014 | 17:12:10 | GMT+0530
+[git] [add] [staging] In order to add only some lines of a file for committing, use git add -p <filename>. If the file is new, use git add -N <filename>. Look up http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git for more. 
+
 Wednesday | 29 Jan 2014 | 18:55:44 | GMT+0530
 [xinitrc] [X] [xsessionrc] In order to have your xmodmap commands take effect, put them in .xsessionrc, NOT .xinitrc. Take a look at this: http://askubuntu.com/questions/150487/what-happens-under-the-covers-to-log-me-in-and-start-up-the-unity-graphics-user. Also, man xmodmap for a few examples of remapping keys. 
 
