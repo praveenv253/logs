@@ -1,3 +1,6 @@
+Thursday | 24 Apr 2014 | 19:01:34 | GMT+0530
+[python] [matplotlib] [removing lines] To remove lines the object oriented way in matplotlib (using axes, etc.) take a look at my tuner program for an example. Alternatively, look at the fitzhugh-nagumo assignment of the computational neuroscience course. 
+
 Thursday | 24 Apr 2014 | 18:59:41 | GMT+0530
 [python] [non blocking input] [select] Use the select module in python for non-blocking input. Look at my tuner program for an example of its usage. 
 
