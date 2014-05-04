@@ -1,3 +1,6 @@
+Sunday | 04 May 2014 | 22:46:39 | GMT+0530
+[glibc version] [ldd] You can find out your glibc version by running ldd --version. You can also do a locate libc.so.6 and then execute the shared library like a program. This actually displays the version and some additional compile information. 
+
 Thursday | 24 Apr 2014 | 19:01:34 | GMT+0530
 [python] [matplotlib] [removing lines] To remove lines the object oriented way in matplotlib (using axes, etc.) take a look at my tuner program for an example. Alternatively, look at the fitzhugh-nagumo assignment of the computational neuroscience course. 
 
