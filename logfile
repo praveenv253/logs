@@ -1,3 +1,6 @@
+Monday | 05 May 2014 | 16:43:58 | GMT+0530
+[ssh] [keygen] [id_rsa] In order to create a pair of RSA keys, use ssh-keygen -t rsa -C "user@host". The -C option is optional, but can be used to put your email address into the key. 
+
 Sunday | 04 May 2014 | 22:46:39 | GMT+0530
 [glibc version] [ldd] You can find out your glibc version by running ldd --version. You can also do a locate libc.so.6 and then execute the shared library like a program. This actually displays the version and some additional compile information. 
 
