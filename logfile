@@ -1,3 +1,6 @@
+Monday | 09 Jun 2014 | 14:42:01 | GMT+0530
+[latex] [thesis] [font] Check out some choices on fonts for a thesis. They use Bitstream Charter for the main body text and Computer Modern for the math. 
+
 Tuesday | 13 May 2014 | 22:52:00 | GMT+0530
 [ubuntu] [launcher] [desktop] [tvim] In order to make applications that you can "summon" from X, say by double-clicking on a file in nautilus, you need to create a .desktop file corresponding to your application. To figure out how to do this, look at https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles. tvim.desktop makes for a good template. I have also made a couple of notes in misc/tvim.sh. 
 
