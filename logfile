@@ -1,3 +1,6 @@
+Saturday | 14 Jun 2014 | 17:48:04 | GMT+0530
+[rhythmbox] [stop after current track] [plugins] I was trying to find a method to get Rhythmbox to stop after the current track. I found a plugin that does this, but it is old, and the manual installation does not work. Instead, I found this: http://askubuntu.com/questions/147942/how-do-i-install-third-party-rhythmbox-plugins, which seems more future-proof. 
+
 Friday | 13 Jun 2014 | 18:32:11 | GMT+0530
 [firefox] [tabs] [ctrl pgup] [ctrl pgdn] Firefox doesnt change tabs with Ctrl+PgUp or Ctrl+PgDn when you are focused on a text input field. To fix this, install the "free control" add-on. https://addons.mozilla.org/en-US/firefox/addon/free-control/ 
 
