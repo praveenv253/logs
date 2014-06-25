@@ -1,3 +1,6 @@
+Thursday | 26 Jun 2014 | 00:45:40 | GMT+0530
+[g++] [make] [dependencies] In order to find out which headers each .cpp file requires, perform a g++ -MM file.cpp. This lists out the dependencies for converting file.cpp into an object file. man g++ and do a /-M for the whole list of sub-options. -MM does not list system libraries. 
+
 Saturday | 14 Jun 2014 | 22:33:13 | GMT+0530
 [matplotlib] [fonts] When trying to change fonts in matplotlib, you might run into an error that says that the font or the font family was not found. To fix this, you need to actually add the font to matplotlibs font database. For me, this is in /usr/share/matplotlib/mpl-data/fonts/ttf. Create a symbolic link to the font of your choice over here. Then use the _name_ of font package - open the font file with the default Font Viewer for this - in matplotlibrc to set your font preference. 
 
