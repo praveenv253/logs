@@ -1,3 +1,6 @@
+Friday | 04 Jul 2014 | 16:15:17 | GMT+0530
+[thinkpad] [intel] [slow wifi] In order to solve the problem of a slow wireless connection on Thinkpads running Ubuntu 12.04 (and possibly later versions as well), disable the N-mode (IEEE802.11n) as described here: http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards 
+
 Thursday | 26 Jun 2014 | 00:45:40 | GMT+0530
 [g++] [make] [dependencies] In order to find out which headers each .cpp file requires, perform a g++ -MM file.cpp. This lists out the dependencies for converting file.cpp into an object file. man g++ and do a /-M for the whole list of sub-options. -MM does not list system libraries. 
 
