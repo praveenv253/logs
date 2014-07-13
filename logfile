@@ -1,3 +1,6 @@
+Monday | 14 Jul 2014 | 00:47:50 | GMT+0530
+[encryption] [gpg] Encrypt a file with gpg -c <file>. Decrypt with gpg <file>. Be sure to delete the un-encrypted file after encryption. shred it, perhaps. 
+
 Friday | 04 Jul 2014 | 16:15:17 | GMT+0530
 [thinkpad] [intel] [slow wifi] In order to solve the problem of a slow wireless connection on Thinkpads running Ubuntu 12.04 (and possibly later versions as well), disable the N-mode (IEEE802.11n) as described here: http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards 
 
