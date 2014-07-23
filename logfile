@@ -1,3 +1,6 @@
+Wednesday | 23 Jul 2014 | 16:02:23 | GMT+0530
+[bash] [arguments] [parsing] [getopt] A possible method to ease the pain of parsing arguments in bash: man getopt. Note that this is GNU getopt in linux, by default. The non-GNU getopt is apparently "fundamentally broken". Read http://stackoverflow.com/questions/402377/using-getopts-in-bash-shell-script-to-get-long-and-short-command-line-options. 
+
 Wednesday | 23 Jul 2014 | 12:18:28 | GMT+0530
 [terminal] [bash] [z] [t] Tools for improving your efficiency with the terminal: https://github.com/rupa/z/ and https://github.com/sjl/t/ 
 
