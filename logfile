@@ -1,3 +1,6 @@
+Monday | 22 Sep 2014 | 15:44:09 | GMT-0400
+[bash] [single quotes] In bash, single-quotation causes _all_ characters within to be treated as literal. "A single quotation mark may not appear within single quotes; not even when preceded by a backslash." - From the man pages of bash. 
+
 Friday | 19 Sep 2014 | 23:18:46 | GMT-0400
 [top] [htop] [processor utilization] To check out CPU utilization using a fancier top command, try htop. 
 
