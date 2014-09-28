@@ -1,3 +1,6 @@
+Sunday | 28 Sep 2014 | 17:50:59 | GMT-0400
+[vim-bundle] [git] [submodules] I made the .vim/bundle folder into a repo of submodules. In order to successfully clone and set up this folder, first clone bundle, then run git submodule init followed by git submodule update in that folder. 
+
 Monday | 22 Sep 2014 | 15:44:09 | GMT-0400
 [bash] [single quotes] In bash, single-quotation causes _all_ characters within to be treated as literal. "A single quotation mark may not appear within single quotes; not even when preceded by a backslash." - From the man pages of bash. 
 
