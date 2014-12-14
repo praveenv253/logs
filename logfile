@@ -1,3 +1,6 @@
+Sunday | 14 Dec 2014 | 13:05:27 | GMT+0530
+[matplotlib] [legend outside plot] http://stackoverflow.com/questions/4700614/how-to-put-the-legend-out-of-the-plot 
+
 Thursday | 30 Oct 2014 | 02:14:03 | GMT-0400
 [numpy] [ndarray] [expanding dimensions] In order to expand the number of dimensions of a numpy array, there are several options: np.expand_dims(x, axis=1) or x[:, np.newaxis] or x[:, None]. Refer to http://docs.scipy.org/doc/numpy/reference/generated/numpy.expand_dims.html. 
 
