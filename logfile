@@ -1,3 +1,6 @@
+Tuesday | 16 Dec 2014 | 10:36:30 | GMT+0530
+[nautilus] [right click] [open in terminal] To get the "Open in terminal" command in the right-click menu of nautilus, install nautilus-open-terminal and nautilus-actions. Then restart nautilus with nautilus -q. Reference: http://askubuntu.com/questions/450280/open-in-terminal-action-in-nautilus-in-ubuntu-14-04. 
+
 Tuesday | 16 Dec 2014 | 10:32:23 | GMT+0530
 [nautilus] [foreground] To make nautilus open windows in front of the terminal in 14.04, install compizconfig-settings-manager and set the "Focus Prevention Level" to "Off" under "General Options" > "Focus and raise behaviour". Reference: http://askubuntu.com/questions/365030/how-to-make-nemo-start-in-foreground 
 
