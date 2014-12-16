@@ -1,3 +1,6 @@
+Tuesday | 16 Dec 2014 | 11:32:00 | GMT+0530
+[remap] [caps lock] [ctrl] [14.04] Remapping Caps Lock to Control in 14.04 was one of the biggest headaches in a long long time. But here is what you have to do: http://www.linux.com/learn/tutorials/769644-hacking-your-linux-keyboard-with-xkb shows you how you can use xkb to make modifications to key functions. But it does not list all possible modifications that exist. To see what modifications xkb already provides, take a look at /usr/share/X11/xkb/symbols. There are files called "ctrl" and "capslock" and such. The file ctrl, for example, has a modification called "nocaps". You can now use this modification from command line by saying: setxkbmap -option "ctrl:nocaps". Another modification I liked was "shift:both_capslock", which toggles caps lock when you press both shift keys together. To be continued... 
+
 Tuesday | 16 Dec 2014 | 10:36:30 | GMT+0530
 [nautilus] [right click] [open in terminal] To get the "Open in terminal" command in the right-click menu of nautilus, install nautilus-open-terminal and nautilus-actions. Then restart nautilus with nautilus -q. Reference: http://askubuntu.com/questions/450280/open-in-terminal-action-in-nautilus-in-ubuntu-14-04. 
 
