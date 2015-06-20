@@ -1,3 +1,6 @@
+Saturday | 20 Jun 2015 | 17:11:05 | GMT-0400
+[git] [notes] [commits] You can find a good reference for git notes [here](https://git-scm.com/blog/2010/08/25/notes.html). Also, of course, `git help notes`. Notes can be used, for instance, to add extra information to a commit without actually changing the hash of the commit (as amend does). This proved useful when I had to add a note to correct an erroneous commit message that I also accidentally pushed to the server - the [misc repository](https://github.com/praveenv253/misc) if you are wondering. 
+
 Wednesday | 17 Jun 2015 | 02:13:52 | GMT-0400
 [jekyll] [tags] In order to generate tag pages in jekyll, look at [this](http://charliepark.org/tags-in-jekyll/). 
 
