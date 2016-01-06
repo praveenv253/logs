@@ -1,3 +1,6 @@
+Thursday | 07 Jan 2016 | 00:33:56 | GMT+0530
+[vim] [python] [indentation] How do you automatically get vim to do PEP8-style indentation for python code? Look up [this](http://henry.precheur.org/vim/python.html) blog post which references [this](http://www.vim.org/scripts/script.php?script_id=974) vim script. It has also been added to the dotvim repo. 
+
 Friday | 03 Jul 2015 | 00:05:47 | GMT-0400
 [linux] [filesystem hierarchy] [directory structure] To learn about the linux filesystem hierarchy, i.e., root directory structure, look here: http://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/ 
 
