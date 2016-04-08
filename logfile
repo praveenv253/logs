@@ -1,3 +1,6 @@
+Friday | 08 Apr 2016 | 00:22:21 | GMT-0400
+[sudo] [environment] Test whether or not sudo is using the environment you expect by creating a small test script with `echo $HOME` for instance, and then running it as `sudo bash test.sh`. Note that testing the environment with `sudo echo $HOME` will *not* work, as bash expands `$HOME` before the command gets hit with sudo. The best way to get sudo to use the environment *you* want for a one-time job is to simply supply the environment variable while executing: `sudo HOME=/home/praveen pip3 install numpy`. For a more permanent solution, edit the /etc/sudoers file using `sudo visudo`. 
+
 Tuesday | 16 Feb 2016 | 22:59:43 | GMT-0500
 [ssh] [kill] To terminate an unresponsive ssh session, press `<Return>~.`, as explained, with more such commands, [here](http://askubuntu.com/questions/29942/how-can-i-break-out-of-ssh-when-it-locks) 
 
