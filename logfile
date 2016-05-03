@@ -1,3 +1,6 @@
+Tuesday | 03 May 2016 | 16:29:03 | GMT-0400
+[screen] Take a look at [this](https://www.rackaid.com/blog/linux-screen-tutorial-and-how-to/) for a nice, short tutorial on screen. Be warned: screen and my shortcuts in vim do not seem to interact very well. 
+
 Tuesday | 19 Apr 2016 | 23:38:17 | GMT-0400
 [pdf] [builtins] [two pages per side] To convert a pdf document into one containing two pages per side, simply `man pdfnup`. This is a convenient frontend to the more complex `pdfjam`. For most purposes, this should suffice: `pdfnup --paper letter document.pdf`, which will produce a `document-nup.pdf` in the current directory, with two pages per side in landscape orientation. 
 
