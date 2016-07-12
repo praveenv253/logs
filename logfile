@@ -1,3 +1,6 @@
+Tuesday | 12 Jul 2016 | 13:31:42 | GMT-0400
+[python] [user defined modules] For more general info on making and installing your own packages, take a look at [this page](http://www.scipy-lectures.org/intro/language/reusing_code.html). 
+
 Tuesday | 12 Jul 2016 | 13:26:18 | GMT-0400
 [python] [user defined modules] [virtualenv] [wrapper] To make virtualenv find your user-defined module, assuming you are using virtualenvwrapper, you can simply use the [`add2virtualenv`](http://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html#add2virtualenv) command. 
 
