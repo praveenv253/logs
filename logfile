@@ -1,3 +1,6 @@
+Wednesday | 13 Jul 2016 | 20:04:21 | GMT-0400
+[ls] [sort] [file extension] Get ls to sort by file extension using `ls -X`. I have added this to `.bashrc` so this is now the default. If you want the usual directory listing, for instance while perusing a directory with a lot of files of different file type, use `ls -U`. 
+
 Tuesday | 12 Jul 2016 | 13:31:42 | GMT-0400
 [python] [user defined modules] For more general info on making and installing your own packages, take a look at [this page](http://www.scipy-lectures.org/intro/language/reusing_code.html). 
 
