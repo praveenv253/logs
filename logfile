@@ -1,3 +1,6 @@
+Thursday | 14 Jul 2016 | 14:31:17 | GMT-0400
+[which] [rhel] [ubuntu] The `which` program used by Fedora/CentOS/RHEL is far more advanced than that used by Debian/Ubuntu. Get the Fedora version [here](https://carlowood.github.io/which/). I have also created an alias for the Fedora version in bash_aliases, which shows you aliases and functions. _Very_ useful. 
+
 Wednesday | 13 Jul 2016 | 20:04:21 | GMT-0400
 [ls] [sort] [file extension] Get ls to sort by file extension using `ls -X`. I have added this to `.bashrc` so this is now the default. If you want the usual directory listing, for instance while perusing a directory with a lot of files of different file type, use `ls -U`. 
 
