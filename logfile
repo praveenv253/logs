@@ -1,3 +1,6 @@
+Saturday | 16 Jul 2016 | 11:26:47 | GMT-0400
+[python] [c] [extensions] For an introduction to extending python using C, via PyObject and the like, take a look at [this](http://dan.iel.fm/posts/python-c-extensions/) tutorial. 
+
 Thursday | 14 Jul 2016 | 14:31:17 | GMT-0400
 [which] [rhel] [ubuntu] The `which` program used by Fedora/CentOS/RHEL is far more advanced than that used by Debian/Ubuntu. Get the Fedora version [here](https://carlowood.github.io/which/). I have also created an alias for the Fedora version in bash_aliases, which shows you aliases and functions. _Very_ useful. 
 
