@@ -1,3 +1,6 @@
+Saturday | 06 Aug 2016 | 17:04:42 | GMT-0400
+[vtk] [mayavi] [install] Installation instructions for vtk are terribly hard to find. [Here](http://www.vtk.org/Wiki/VTK/Configure_and_Build) they are: from the public wiki. 
+
 Saturday | 16 Jul 2016 | 11:26:47 | GMT-0400
 [python] [c] [extensions] For an introduction to extending python using C, via PyObject and the like, take a look at [this](http://dan.iel.fm/posts/python-c-extensions/) tutorial. 
 
