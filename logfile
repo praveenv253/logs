@@ -1,3 +1,6 @@
+Tuesday | 07 Mar 2017 | 19:47:05 | GMT-0500
+[jekyll] [url] If you want to build your static website yourself, and then push only the pages _generated_ by Jekyll to GitHub, you need to _build_ and not _serve_. The `jekyll build` command will use the `url` configuration from `_config.yml` when resolving `absolute_url`s. The `jekyll serve` command will use `http://localhost:4000`, regardless of what `url` is. Hence, _build_ and then push. 
+
 Tuesday | 13 Sep 2016 | 14:07:40 | GMT-0400
 [vim] [print] [hardcopy] [syntax-highlighting] [colorscheme] If you want to export from vim to a pdf file with syntax highlighting, hardcopy does not seem to use the correct syntax highlighting file. Or rather, it uses GUI settings, which means that unless your syntax highlighting file takes care of looking good on gvim, it will not give you a good result. For you to get syntax highlighting _at all_, you must first `:set term=xterm-256color-italic` even if it is already set. Do it even if `:set term` returns `xterm-256color-italic`. Then, to actually get _terminal colours_, use `:TOhtml`, which converts the file into an html page, which you can then print from your browser. For a good print colorscheme, run `:colorscheme print`, which is is a custom light-background colorscheme I made for printing. Do this before running `:TOhtml`, obviously. 
 
