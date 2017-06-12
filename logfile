@@ -1,3 +1,6 @@
+Monday | 12 Jun 2017 | 02:05:38 | GMT-0400
+[pip] [numpy] [mkl] [force compile] I ran into issues with Numpy+MKL again when I upgraded numpy. `pip3 install --upgrade numpy` does not respect `~/.numpy-site.cfg` once again. This is probably because pip just installs binaries, instead of running `setup.py` and compiling from source. You have to force a recompilation by using `pip3 install --no-binary :all: numpy` in order to make it work. If needed, throw in a `--ignore-installed` as well. Refer [this](https://stackoverflow.com/a/41984963/525169) SO answer. 
+
 Tuesday | 07 Mar 2017 | 19:47:05 | GMT-0500
 [jekyll] [url] If you want to build your static website yourself, and then push only the pages _generated_ by Jekyll to GitHub, you need to _build_ and not _serve_. The `jekyll build` command will use the `url` configuration from `_config.yml` when resolving `absolute_url`s. The `jekyll serve` command will use `http://localhost:4000`, regardless of what `url` is. Hence, _build_ and then push. 
 
