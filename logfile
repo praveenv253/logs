@@ -1,3 +1,6 @@
+Tuesday | 13 Jun 2017 | 04:21:16 | GMT-0400
+[python] [profiling] [visualization] [kcachegrind] To better visualize the call tree after profiling a python script, first save your output from cProfile using `python -m cProfile -o <myscript.profile> <myscript.py>`. You will need to install [`pyprof2calltree`](https://pypi.python.org/pypi/pyprof2calltree/) via pip and `kcachegrind` via apt. Then, visualize the profile data with `pyprof2calltree -i <myscript.profile> -k`. Reference: [this](https://stackoverflow.com/a/3561512/525169) SO answer. 
+
 Tuesday | 13 Jun 2017 | 04:16:30 | GMT-0400
 [python] [profiling] [cProfile] Profiling python code is really easy! Just run your script with `python -m cProfile <script.py>`. This will print a list of functions, their call statistics and the amount of time taken by them cumulatively and per call. If you want to sort your output by the amount of time each function took, use `python -m cProfile -s tottime <script.py>`. Look [here](https://docs.python.org/3.6/library/profile.html#pstats.Stats.sort_stats) for the list of possible sort options. You will probably want `tottime`. Also see [this](https://stackoverflow.com/q/582336/525169) SO question. 
 
