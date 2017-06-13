@@ -1,3 +1,6 @@
+Tuesday | 13 Jun 2017 | 04:16:30 | GMT-0400
+[python] [profiling] [cProfile] Profiling python code is really easy! Just run your script with `python -m cProfile <script.py>`. This will print a list of functions, their call statistics and the amount of time taken by them cumulatively and per call. If you want to sort your output by the amount of time each function took, use `python -m cProfile -s tottime <script.py>`. Look [here](https://docs.python.org/3.6/library/profile.html#pstats.Stats.sort_stats) for the list of possible sort options. You will probably want `tottime`. Also see [this](https://stackoverflow.com/q/582336/525169) SO question. 
+
 Monday | 12 Jun 2017 | 02:05:38 | GMT-0400
 [pip] [numpy] [mkl] [force compile] I ran into issues with Numpy+MKL again when I upgraded numpy. `pip3 install --upgrade numpy` does not respect `~/.numpy-site.cfg` once again. This is probably because pip just installs binaries, instead of running `setup.py` and compiling from source. You have to force a recompilation by using `pip3 install --no-binary :all: numpy` in order to make it work. If needed, throw in a `--ignore-installed` as well. Refer [this](https://stackoverflow.com/a/41984963/525169) SO answer. 
 
