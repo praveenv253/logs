@@ -1,359 +1,1353 @@
-Thursday | 15 Jun 2017 | 02:40:45 | GMT-0400
-[python] [logging] Note to self: when you get time, figure out how to do logging, as a general practice: [here](https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/) is a nice link to get you started. 
-
-Thursday | 15 Jun 2017 | 02:38:01 | GMT-0400
-[python] [deadlock] [hanging] [stuck] [trace] Sometimes, a python script just gives up and hangs. Even Ctrl-C does not exit the program. You do not have to have a loop with a catch-all `except` command or anything. Apparently, this can happen because of what is known as a "deadlock", which refers to some kind of race condition when running a threaded program. I was not running a threaded program, except I *was*, because I was using BLAS. In this case, OpenBLAS, which appears to have had a history with deadlocks, and maybe still does, or maybe it was due to my having accidentally installed numpy with MKL and scipy with OpenBLAS. In any event, the only reason I found out that the issue was with blas.py is thanks to [this excellent little piece of software](https://pypi.python.org/pypi/hanging_threads/2.0.3), which shows you a stack trace if your program is inactive for more than 10 seconds. It is a python package called [`hanging_threads`](https://github.com/niccokunzmann/hanging_threads) and works like a charm. This invaluable tool was found after I finally figured out what to google for, and landed on [this SO page](https://stackoverflow.com/q/3443607/525169), and then scrolled down a lot after the top answer (`trace`) did not work for me. [`trace`](https://docs.python.org/3.4/library/trace.html) is a python module and is also really useful. It prints out the commands currently being executed. This is really neat because if your program suddenly (and hopefully deterministically) gives up, you get a full history of all the commands executed. The `--ignore-dir` flag is extremely useful, since you can avoid printing out various internal modules. I was lucky, since my packages of interest (`sht`, `cross_validation`, etc.) were under `$HOME/.local`, so I could just supply `--ignore-dir=/usr` and prevent tracing through imports like `sys` and `numpy`. 
-
-Thursday | 15 Jun 2017 | 02:20:44 | GMT-0400
-[python] [debugging] [pdb] It is really easy to step into debug mode in a python script. Simply add `import pdb; pdb.set_trace()` at any point in your script and you will have effectively created a breakpoint. Your script will slide into a debugging session with a python prompt. Watch out though: there are several single-letter commands which will override your variable names. For instance, `b` stands for break or something like that, so if you have a variable called `b`, you will not be able to inspect it. Use `exec("print(b)")` in all such cases, to side-step this issue. 
-
-Tuesday | 13 Jun 2017 | 04:21:16 | GMT-0400
-[python] [profiling] [visualization] [kcachegrind] To better visualize the call tree after profiling a python script, first save your output from cProfile using `python -m cProfile -o <myscript.profile> <myscript.py>`. You will need to install [`pyprof2calltree`](https://pypi.python.org/pypi/pyprof2calltree/) via pip and `kcachegrind` via apt. Then, visualize the profile data with `pyprof2calltree -i <myscript.profile> -k`. Reference: [this](https://stackoverflow.com/a/3561512/525169) SO answer. 
-
-Tuesday | 13 Jun 2017 | 04:16:30 | GMT-0400
-[python] [profiling] [cProfile] Profiling python code is really easy! Just run your script with `python -m cProfile <script.py>`. This will print a list of functions, their call statistics and the amount of time taken by them cumulatively and per call. If you want to sort your output by the amount of time each function took, use `python -m cProfile -s tottime <script.py>`. Look [here](https://docs.python.org/3.6/library/profile.html#pstats.Stats.sort_stats) for the list of possible sort options. You will probably want `tottime`. Also see [this](https://stackoverflow.com/q/582336/525169) SO question. 
-
-Monday | 12 Jun 2017 | 02:05:38 | GMT-0400
-[pip] [numpy] [mkl] [force compile] I ran into issues with Numpy+MKL again when I upgraded numpy. `pip3 install --upgrade numpy` does not respect `~/.numpy-site.cfg` once again. This is probably because pip just installs binaries, instead of running `setup.py` and compiling from source. You have to force a recompilation by using `pip3 install --no-binary :all: numpy` in order to make it work. If needed, throw in a `--ignore-installed` as well. Refer [this](https://stackoverflow.com/a/41984963/525169) SO answer. 
-
-Tuesday | 07 Mar 2017 | 19:47:05 | GMT-0500
-[jekyll] [url] If you want to build your static website yourself, and then push only the pages _generated_ by Jekyll to GitHub, you need to _build_ and not _serve_. The `jekyll build` command will use the `url` configuration from `_config.yml` when resolving `absolute_url`s. The `jekyll serve` command will use `http://localhost:4000`, regardless of what `url` is. Hence, _build_ and then push. 
-
-Tuesday | 13 Sep 2016 | 14:07:40 | GMT-0400
-[vim] [print] [hardcopy] [syntax-highlighting] [colorscheme] If you want to export from vim to a pdf file with syntax highlighting, hardcopy does not seem to use the correct syntax highlighting file. Or rather, it uses GUI settings, which means that unless your syntax highlighting file takes care of looking good on gvim, it will not give you a good result. For you to get syntax highlighting _at all_, you must first `:set term=xterm-256color-italic` even if it is already set. Do it even if `:set term` returns `xterm-256color-italic`. Then, to actually get _terminal colours_, use `:TOhtml`, which converts the file into an html page, which you can then print from your browser. For a good print colorscheme, run `:colorscheme print`, which is is a custom light-background colorscheme I made for printing. Do this before running `:TOhtml`, obviously. 
-
-Monday | 12 Sep 2016 | 18:23:07 | GMT-0400
-[vim] [italics] [comments] To make vim display italicised text, see [this](http://www.nerdyweekly.com/posts/enable-italic-text-vim-tmux-gnome-terminal/) wonderful blog entry. Essentially, we need to manually map the escape sequences to the keywords `sitm` and `ritm`, which are used by vim to set and remove italic mode respectively. The file in question, `xterm-256color-italic.terminfo`, has been added to the `misc` repository as well. It contains all relevant install info. Note that `TERM` must be set to `xterm-256color-italic` by `gnome-terminal` for this to take effect. [This](http://askubuntu.com/questions/233280/gnome-terminal-reports-term-to-be-xterm) askubuntu question tells you how to do it. Set the command executed by `gnome-terminal` to be `env TERM=xterm-256color-italic /bin/bash`. 
-
-Saturday | 06 Aug 2016 | 17:04:42 | GMT-0400
-[vtk] [mayavi] [install] Installation instructions for vtk are terribly hard to find. [Here](http://www.vtk.org/Wiki/VTK/Configure_and_Build) they are: from the public wiki. 
-
-Saturday | 16 Jul 2016 | 11:26:47 | GMT-0400
-[python] [c] [extensions] For an introduction to extending python using C, via PyObject and the like, take a look at [this](http://dan.iel.fm/posts/python-c-extensions/) tutorial. 
-
-Thursday | 14 Jul 2016 | 14:31:17 | GMT-0400
-[which] [rhel] [ubuntu] The `which` program used by Fedora/CentOS/RHEL is far more advanced than that used by Debian/Ubuntu. Get the Fedora version [here](https://carlowood.github.io/which/). I have also created an alias for the Fedora version in bash_aliases, which shows you aliases and functions. _Very_ useful. 
-
-Wednesday | 13 Jul 2016 | 20:04:21 | GMT-0400
-[ls] [sort] [file extension] Get ls to sort by file extension using `ls -X`. I have added this to `.bashrc` so this is now the default. If you want the usual directory listing, for instance while perusing a directory with a lot of files of different file type, use `ls -U`. 
-
-Tuesday | 12 Jul 2016 | 13:31:42 | GMT-0400
-[python] [user defined modules] For more general info on making and installing your own packages, take a look at [this page](http://www.scipy-lectures.org/intro/language/reusing_code.html). 
-
-Tuesday | 12 Jul 2016 | 13:26:18 | GMT-0400
-[python] [user defined modules] [virtualenv] [wrapper] To make virtualenv find your user-defined module, assuming you are using virtualenvwrapper, you can simply use the [`add2virtualenv`](http://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html#add2virtualenv) command. 
-
-Tuesday | 12 Jul 2016 | 13:20:11 | GMT-0400
-[python] [user defined] [module] [package] To make a user-defined python module that you can import in many scripts, you must place your module in one of the site-packages directories in `sys.path`. If you are not using a virtual environment to run your programs in, then the correct place for this is `~/.local/lib/python3.4/site-packages/`. It was meant for exactly this purpose; see [PEP 370](https://www.python.org/dev/peps/pep-0370/). If you are using a virtualenv, then you could simply create a symbolic link in the virtualenv site-packages directory to your module. Or you could install your module in `/usr/lib/python3.4` with sudo privileges (probably not a good idea though). There should be a way to get virtualenv to look in `~/.local` as well, but I have not yet figured this out. 
-
-Tuesday | 03 May 2016 | 16:29:03 | GMT-0400
-[screen] Take a look at [this](https://www.rackaid.com/blog/linux-screen-tutorial-and-how-to/) for a nice, short tutorial on screen. Be warned: screen and my shortcuts in vim do not seem to interact very well. 
-
-Tuesday | 19 Apr 2016 | 23:38:17 | GMT-0400
-[pdf] [builtins] [two pages per side] To convert a pdf document into one containing two pages per side, simply `man pdfnup`. This is a convenient frontend to the more complex `pdfjam`. For most purposes, this should suffice: `pdfnup --paper letter document.pdf`, which will produce a `document-nup.pdf` in the current directory, with two pages per side in landscape orientation. 
-
-Sunday | 17 Apr 2016 | 19:35:35 | GMT-0400
-[python] [cvxopt] [pip] [mkl] To install cvxopt linked to Intel MKL using pip, set environment variables in the installation commands as follows: `sudo CVXOPT_BLAS_LIB_DIR=/opt/intel/mkl/lib/intel64 CVXOPT_BLAS_LIB=mkl_rt CVXOPT_LAPACK_LIB=mkl_rt HOME=$HOME pip3 install cvxopt`. It is as easy as that! To see more configuration options, download the cvxopt source files and look at the `setup.py` script. It lists which environment variables you can set. 
-
-Friday | 08 Apr 2016 | 00:22:21 | GMT-0400
-[sudo] [environment] Test whether or not sudo is using the environment you expect by creating a small test script with `echo $HOME` for instance, and then running it as `sudo bash test.sh`. Note that testing the environment with `sudo echo $HOME` will *not* work, as bash expands `$HOME` before the command gets hit with sudo. The best way to get sudo to use the environment *you* want for a one-time job is to simply supply the environment variable while executing: `sudo HOME=/home/praveen pip3 install numpy`. For a more permanent solution, edit the /etc/sudoers file using `sudo visudo`. 
-
-Tuesday | 16 Feb 2016 | 22:59:43 | GMT-0500
-[ssh] [kill] To terminate an unresponsive ssh session, press `<Return>~.`, as explained, with more such commands, [here](http://askubuntu.com/questions/29942/how-can-i-break-out-of-ssh-when-it-locks) 
-
-Sunday | 14 Feb 2016 | 04:41:56 | GMT-0500
-[atlas] [blas] [lapack] [scikit-learn] [pip] [install] Installing scikit-learn via pip on a machine with no sudo privileges, and a static ATLAS lib can be a nightmare if you do not know what you are doing: the idea is to use the --global-option flag of pip install to pass extra commands to build_ext. See [this](http://stackoverflow.com/a/22942120/525169) SO answer. In this particular instance, you probably want to use something like --global-option=build_ext --global-option=-I/path/to/include --global-option=-L/path/to/lib --global-option=-latlas --global-option=-lcblas ... scikit-learn (where ... is for the other blas libs). Also see [this](http://scikit-learn-general.narkive.com/FSKFd98i/on-building-scikit-learn-0-14-1-with-static-atlas-on-non-standard-location) thread, which helped me out with these options 
-
-Thursday | 07 Jan 2016 | 00:33:56 | GMT+0530
-[vim] [python] [indentation] How do you automatically get vim to do PEP8-style indentation for python code? Look up [this](http://henry.precheur.org/vim/python.html) blog post which references [this](http://www.vim.org/scripts/script.php?script_id=974) vim script. It has also been added to the dotvim repo. 
-
-Friday | 03 Jul 2015 | 00:05:47 | GMT-0400
-[linux] [filesystem hierarchy] [directory structure] To learn about the linux filesystem hierarchy, i.e., root directory structure, look here: http://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/ 
-
-Monday | 22 Jun 2015 | 02:21:04 | GMT-0400
-[afs] [acl] [file permissions] In order to recursively set AFS ACL permissions for a directory, you need to manually use `find -exec` as follows: `find <dir> -type d -exec fs sa {} <user> <permissions> \;`. [Here](http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907138) is the reference for this. 
-
-Saturday | 20 Jun 2015 | 17:11:05 | GMT-0400
-[git] [notes] [commits] You can find a good reference for git notes [here](https://git-scm.com/blog/2010/08/25/notes.html). Also, of course, `git help notes`. Notes can be used, for instance, to add extra information to a commit without actually changing the hash of the commit (as amend does). This proved useful when I had to add a note to correct an erroneous commit message that I also accidentally pushed to the server - the [misc repository](https://github.com/praveenv253/misc) if you are wondering. 
-
-Wednesday | 17 Jun 2015 | 02:13:52 | GMT-0400
-[jekyll] [tags] In order to generate tag pages in jekyll, look at [this](http://charliepark.org/tags-in-jekyll/). 
-
-Wednesday | 10 Jun 2015 | 09:46:12 | GMT-0400
-[matlab] [figure] [maintain dimensions] To save a figure with specific dimensions, look at http://www.mathworks.com/help/matlab/creating_plots/save-figure-at-specific-size-and-resolution.html 
-
-Thursday | 02 Apr 2015 | 11:46:10 | GMT-0400
-[gimp] [export] [pdf] Gimp imports multi-page pdfs as one layer-per-page. But it does not re-export multi-layer figures as a multi-page pdf, with one page-per-layer. It just exports the topmost visible layer. I found a solution for this here http://registry.gimp.org/node/25400. You need to reverse the order of layers, export the project as a .mng animation. Then, from command line, call convert file.mng file.pdf. Apparently, for convert to work, you need to have ImageMagick installed, but I think I had it by default. 
-
-Sunday | 22 Mar 2015 | 03:14:02 | GMT-0400
-[numpy] [scipy] [linear regression] Note that there are multiple numpy/scipy functions that do regression, fitting, etc. Of these, scipy.stats.linregress fits a line and forces an intercept. You do not have to explicitly add 1s or anything. numpy.linalg.lstsq does plain old linear regression - your inputs can even be matrices. It simply returns argmin |ax - b|^2 for given a and b, and therefore does not force an intercept. The last one I want to mention is scipy.optimize.leastsq. This one is a non-linear least squares solver, and I know nothing more about it. 
-
-Tuesday | 03 Mar 2015 | 20:57:30 | GMT-0500
-[nautilus] [hidden files] [default] Nautilus shows hidden files by default when opened from command line. To fix this, go to dconf-editor, and under org->gtk->settings->file-chooser, uncheck show-hidden. Link: http://ubuntuforums.org/showthread.php?t=2133298&s=cc010bab19c680d2f485dd0eb8575a28&p=12623240#post12623240 
-
-Tuesday | 16 Dec 2014 | 14:07:12 | GMT+0530
-[remap keys] [prtsc] [menu] [14.04] Remapping PrtSc to Menu requires that you define your own xkb modification. I have added the modified versions of the relevant configuration files to the misc repository, along with a README containing some explanantions. 
-
-Tuesday | 16 Dec 2014 | 11:38:45 | GMT+0530
-[remap] [caps lock] [ctrl] [14.04] How do you make the settings described in the previous log message permanent? The first thing you need to do is to install dconf-editor. Open it up and go to org > gnome > desktop > input-sources. Here, there is an xkb-options setting. This is where you need to place your modifications. So change xkb-options to ['shift:both_capslock','ctrl:nocaps']. This should take effect immediately and work fine on login. However, it will only work as long as you stay with the same keyboard configuration. If you change keyboard configurations, the xkb-options setting gets reset, and will not continue to work. 
-
-Tuesday | 16 Dec 2014 | 11:32:00 | GMT+0530
-[remap] [caps lock] [ctrl] [14.04] Remapping Caps Lock to Control in 14.04 was one of the biggest headaches in a long long time. But here is what you have to do: http://www.linux.com/learn/tutorials/769644-hacking-your-linux-keyboard-with-xkb shows you how you can use xkb to make modifications to key functions. But it does not list all possible modifications that exist. To see what modifications xkb already provides, take a look at /usr/share/X11/xkb/symbols. There are files called "ctrl" and "capslock" and such. The file ctrl, for example, has a modification called "nocaps". You can now use this modification from command line by saying: setxkbmap -option "ctrl:nocaps". Another modification I liked was "shift:both_capslock", which toggles caps lock when you press both shift keys together. To be continued... 
-
-Tuesday | 16 Dec 2014 | 10:36:30 | GMT+0530
-[nautilus] [right click] [open in terminal] To get the "Open in terminal" command in the right-click menu of nautilus, install nautilus-open-terminal and nautilus-actions. Then restart nautilus with nautilus -q. Reference: http://askubuntu.com/questions/450280/open-in-terminal-action-in-nautilus-in-ubuntu-14-04. 
-
-Tuesday | 16 Dec 2014 | 10:32:23 | GMT+0530
-[nautilus] [foreground] To make nautilus open windows in front of the terminal in 14.04, install compizconfig-settings-manager and set the "Focus Prevention Level" to "Off" under "General Options" > "Focus and raise behaviour". Reference: http://askubuntu.com/questions/365030/how-to-make-nemo-start-in-foreground 
-
-Sunday | 14 Dec 2014 | 13:05:27 | GMT+0530
-[matplotlib] [legend outside plot] http://stackoverflow.com/questions/4700614/how-to-put-the-legend-out-of-the-plot 
-
-Thursday | 30 Oct 2014 | 02:14:03 | GMT-0400
-[numpy] [ndarray] [expanding dimensions] In order to expand the number of dimensions of a numpy array, there are several options: np.expand_dims(x, axis=1) or x[:, np.newaxis] or x[:, None]. Refer to http://docs.scipy.org/doc/numpy/reference/generated/numpy.expand_dims.html. 
-
-Sunday | 28 Sep 2014 | 18:41:52 | GMT-0400
-[profile] [bashrc] My ~/.bashrc file was not getting automatically loaded when I ssh-ed into the ece server. Turns out that you need a ~/.profile file, which tells bash to load ~/.bashrc. So I copied the default ~/.profile file from my computer. 
-
-Sunday | 28 Sep 2014 | 18:36:16 | GMT-0400
-[bash] [inputrc] [reload] When I ssh-ed into the ece server, inputrc was not loaded by default. So command-line history was not iPython-like. To make this happen, just press Ctrl-X Ctrl-R in bash. It re-reads the init file, i.e. reloads commands from .inputrc. Source: http://superuser.com/questions/241187/how-do-i-reload-inputrc. Reference: http://www.gnu.org/software/bash/manual/bashref.html#Miscellaneous-Commands 
-
-Sunday | 28 Sep 2014 | 17:50:59 | GMT-0400
-[vim-bundle] [git] [submodules] I made the .vim/bundle folder into a repo of submodules. In order to successfully clone and set up this folder, first clone bundle, then run git submodule init followed by git submodule update in that folder. 
-
-Monday | 22 Sep 2014 | 15:44:09 | GMT-0400
-[bash] [single quotes] In bash, single-quotation causes _all_ characters within to be treated as literal. "A single quotation mark may not appear within single quotes; not even when preceded by a backslash." - From the man pages of bash. 
-
-Friday | 19 Sep 2014 | 23:18:46 | GMT-0400
-[top] [htop] [processor utilization] To check out CPU utilization using a fancier top command, try htop. 
-
-Thursday | 04 Sep 2014 | 22:41:12 | GMT-0400
-[bash] [fignore] [tab completion] Use the FIGNORE environment variable to tell bash to ignore certain file extensions while performing tab completion. 
-
-Wednesday | 23 Jul 2014 | 18:07:20 | GMT+0530
-[bash] [history] [timestamp] In order to get a time-stamped command line history for bash, look up the HISTTIMEFORMAT setting in the man pages for bash. My HISTTIMEFORMAT is currently set to "%F %T ", to understand which you have to look at the arguments to strftime(3). %F means YYYY-MM-DD and %T means hh:mm:ss. These time stamps are stored in a weird fashion, possibly seconds from epoch or something, so you cannot understand them by just looking at the .bash_history file. Instead, use the "history" command. Here, the timestamps are formatted as requested. To find out more, do a help history (not man! - this is a bash thing). 
-
-Wednesday | 23 Jul 2014 | 16:02:23 | GMT+0530
-[bash] [arguments] [parsing] [getopt] A possible method to ease the pain of parsing arguments in bash: man getopt. Note that this is GNU getopt in linux, by default. The non-GNU getopt is apparently "fundamentally broken". Read http://stackoverflow.com/questions/402377/using-getopts-in-bash-shell-script-to-get-long-and-short-command-line-options. 
-
-Wednesday | 23 Jul 2014 | 12:18:28 | GMT+0530
-[terminal] [bash] [z] [t] Tools for improving your efficiency with the terminal: https://github.com/rupa/z/ and https://github.com/sjl/t/ 
-
-Sunday | 20 Jul 2014 | 17:56:33 | GMT+0530
-[ruby] [ubuntu] [installtion] Here is a nice tutorial on installing ruby on ubuntu: http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/ 
-
-Monday | 14 Jul 2014 | 00:47:50 | GMT+0530
-[encryption] [gpg] Encrypt a file with gpg -c <file>. Decrypt with gpg <file>. Be sure to delete the un-encrypted file after encryption. shred it, perhaps. 
-
-Friday | 04 Jul 2014 | 16:15:17 | GMT+0530
-[thinkpad] [intel] [slow wifi] In order to solve the problem of a slow wireless connection on Thinkpads running Ubuntu 12.04 (and possibly later versions as well), disable the N-mode (IEEE802.11n) as described here: http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards 
-
-Thursday | 26 Jun 2014 | 00:45:40 | GMT+0530
-[g++] [make] [dependencies] In order to find out which headers each .cpp file requires, perform a g++ -MM file.cpp. This lists out the dependencies for converting file.cpp into an object file. man g++ and do a /-M for the whole list of sub-options. -MM does not list system libraries. 
-
-Saturday | 14 Jun 2014 | 22:33:13 | GMT+0530
-[matplotlib] [fonts] When trying to change fonts in matplotlib, you might run into an error that says that the font or the font family was not found. To fix this, you need to actually add the font to matplotlibs font database. For me, this is in /usr/share/matplotlib/mpl-data/fonts/ttf. Create a symbolic link to the font of your choice over here. Then use the _name_ of font package - open the font file with the default Font Viewer for this - in matplotlibrc to set your font preference. 
-
-Saturday | 14 Jun 2014 | 17:48:04 | GMT+0530
-[rhythmbox] [stop after current track] [plugins] I was trying to find a method to get Rhythmbox to stop after the current track. I found a plugin that does this, but it is old, and the manual installation does not work. Instead, I found this: http://askubuntu.com/questions/147942/how-do-i-install-third-party-rhythmbox-plugins, which seems more future-proof. 
-
-Friday | 13 Jun 2014 | 18:32:11 | GMT+0530
-[firefox] [tabs] [ctrl pgup] [ctrl pgdn] Firefox doesnt change tabs with Ctrl+PgUp or Ctrl+PgDn when you are focused on a text input field. To fix this, install the "free control" add-on. https://addons.mozilla.org/en-US/firefox/addon/free-control/ 
-
-Monday | 09 Jun 2014 | 14:42:01 | GMT+0530
-[latex] [thesis] [font] Check out some choices on fonts for a thesis: http://www.khirevich.com/latex/font/. They use Bitstream Charter for the main body text and Computer Modern for the math. 
-
-Tuesday | 13 May 2014 | 22:52:00 | GMT+0530
-[ubuntu] [launcher] [desktop] [tvim] In order to make applications that you can "summon" from X, say by double-clicking on a file in nautilus, you need to create a .desktop file corresponding to your application. To figure out how to do this, look at https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles. tvim.desktop makes for a good template. I have also made a couple of notes in misc/tvim.sh. 
-
-Monday | 05 May 2014 | 16:43:58 | GMT+0530
-[ssh] [keygen] [id_rsa] In order to create a pair of RSA keys, use ssh-keygen -t rsa -C "user@host". The -C option is optional, but can be used to put your email address into the key. 
-
-Sunday | 04 May 2014 | 22:46:39 | GMT+0530
-[glibc version] [ldd] You can find out your glibc version by running ldd --version. You can also do a locate libc.so.6 and then execute the shared library like a program. This actually displays the version and some additional compile information. 
-
-Thursday | 24 Apr 2014 | 19:01:34 | GMT+0530
-[python] [matplotlib] [removing lines] To remove lines the object oriented way in matplotlib (using axes, etc.) take a look at my tuner program for an example. Alternatively, look at the fitzhugh-nagumo assignment of the computational neuroscience course. 
-
-Thursday | 24 Apr 2014 | 18:59:41 | GMT+0530
-[python] [non blocking input] [select] Use the select module in python for non-blocking input. Look at my tuner program for an example of its usage. 
-
-Saturday | 05 Apr 2014 | 11:59:57 | GMT+0530
-[bash] [command history] [completion] To get ipython-like command completion in bash, i.e. to make it so that bash will only search the subset of history that starts with letters you have already entered so far (thus making it easier to search through history, without having to use the unwieldy Ctrl-R), you need to add a few lines to .inputrc. Take a look at http://askubuntu.com/questions/12368/ipython-like-command-history-for-shell for more. 
-
-Saturday | 15 Mar 2014 | 22:55:56 | GMT+0530
-[g++] [gcc] [ld] [C++] [C] [make] When linking object files (static libraries) into an executable, the order in which you give the libraries matters. For simple scenarios where there are no cyclic references, the *dependent* library should come on the left, and the library which *provides said dependency* should come on the right. Take a look at http://stackoverflow.com/questions/45135/linker-order-gcc to see a diagrammatic view of this, and also to see how cyclic dependencies can be resolved. 
-
-Saturday | 15 Mar 2014 | 22:52:34 | GMT+0530
-[C++] [templates] [template functions] "The implementation of a non-specialized template must be visible to a translation unit that uses it. The compiler must be able to see the implementation in order to generate code for all specializations in your code." What this essentially means is that you cannot define an external templated function in the typical way: have the template function declaration in the header, followed by an implementation of the template function in a C++ file, which then gets compiled into an object file, and later gets linked with the main program. This method does not work. Why? Because the compiler needs to "know" what the "full" definition of the function is (with actual classes of the templated types) in order to actually compile the program. A template function is simply a sort of shorthand for writing many functions of that do the same thing with different data types; but the compiler still needs to actually create "specializations" of this template for each type that actually gets used. That is the only way it can generate object code. Check out http://stackoverflow.com/questions/10632251/undefined-reference-to-template-function on ways to resolve this issue. One method involves putting the implementation in the header. The other method involves pre-defining the specializations. 
-
-Wednesday | 26 Feb 2014 | 17:16:40 | GMT+0530
-[vim] [modeline] [filetype] Note that in order for vim modelines to work, you must have the 'modeline' option *set*, i.e. :set modeline. Do a :help modeline for more info. 
-
-Tuesday | 18 Feb 2014 | 00:44:49 | GMT+0530
-[C] [C++] [headers] [const] [static] [multiple definition error] If you have defined a variable in a header file and not declared it as const, like so: double e = 2.71; then the compiler will treat it as a separate variable in each translation unit. So if you link two such translation units together under the same object later, you will get a multiple definition error, or something like "already defined in...". To solve this issue, mark this variable as static const (in C), or as simply const (in C++, where static is implied for const variables). What this does is to make the linkage of this variable definition _internal_, meaning that once this definition gets #included into a .c or .cpp file, the definition stays there. It does not have scope outside of the translation unit, and thus cannot be seen by the other object files. On the other hand, the addresses of each of these "copies" of the constant in different translation units will be different. To have a "true" global constant this way, you will need to have an "extern const double e;" in your header file, followed by a "const double e = 2.71;" in a separate source file, which is compiled into a separate object file, _which_ then gets linked with all the other objects. Courtesy of http://stackoverflow.com/questions/2328671/constant-variables-not-working-in-header. 
-
-Tuesday | 11 Feb 2014 | 12:46:08 | GMT+0530
-[sudoers] [file corruption] If you accidentally corrupt your /etc/sudoers file (usually by reading it without sudo, incorrectly interpreting that it is empty, and then writing into it _with_ sudo, and finally being unable to correct it because you can no longer use sudo mode), there is a way out. You can use pkexec visudo, which will allow you to edit the sudoers file, provided you are authorized to run programs as root with PolicyKit. Find the default /etc/sudoers file online: https://wiki.debian.org/sudo. In case you are not authorized via PolicyKit, you can still edit the sudoers file using a live CD. Mount the computer hard drive at /mnt, say, and then sudo visudo -f /mnt/etc/sudoers. Courtesy of http://askubuntu.com/questions/73864. Of course, man sudoers and man visudo will tell you more as well. 
-
-Tuesday | 11 Feb 2014 | 12:29:20 | GMT+0530
-[apt] [proxy] [sudoers] Often what happens is that the proxy settings that are set via the command line are not reflected when executing sudo apt-get update/upgrade. The reason this happens is because root has a different set of environment variables than the ones that the user calling sudo does. In order to pass on environment variables to root when executing sudo, you need to edit the /etc/sudoers file. WARNING: Editing this file is dangerous. A corrupted sudoers file may prevent you from using sudo mode. Always use visudo to edit the sudoers file. The sudoers file, by default, has a setting that goes Defaults env_reset. This resets all but a few key environment variables. In order to retain variables of your choice, you need to add them to the "env_keep" list. This goes: "Defaults env_keep += "http_proxy https_proxy ftp_proxy", for example. man sudoers. Also man visudo. Take a look at https://help.ubuntu.com/community/AptGet/Howto for more apt options. Take a look at http://stackoverflow.com/questions/8633461/how-to-keep-environment-variables-when-using-sudo regarding retaining environment variables while using sudo. 
-
-Monday | 03 Feb 2014 | 19:00:46 | GMT+0530
-[gcc] [preprocessor] [macros] You can save and restore macros by using #pragma push_macro("<macro_name>") and #pragma pop_macro("<macro_name>") respectively! This means that you can temporarily redefine macros! For example, I used this to temporarily redefine GSL_REAL to std::real, and then define it back once the need had passed. 
-
-Sunday | 02 Feb 2014 | 17:12:10 | GMT+0530
-[git] [add] [staging] In order to add only some lines of a file for committing, use git add -p <filename>. If the file is new, use git add -N <filename>. Look up http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git for more. 
-
-Wednesday | 29 Jan 2014 | 18:55:44 | GMT+0530
-[xinitrc] [X] [xsessionrc] In order to have your xmodmap commands take effect, put them in .xsessionrc, NOT .xinitrc. Take a look at this: http://askubuntu.com/questions/150487/what-happens-under-the-covers-to-log-me-in-and-start-up-the-unity-graphics-user. Also, man xmodmap for a few examples of remapping keys. 
-
-Saturday | 18 Jan 2014 | 16:54:56 | GMT+0530
-[vim] [ascii] To insert characters with a certain ascii code in vim, use <C-v><code>. For example, <C-v>178 will print the squared symbol. I think only three digit codes are supported, since ascii has only 256 characters. 
-
-Saturday | 18 Jan 2014 | 16:52:39 | GMT+0530
-[vim] [hex] [binary files] To open binary files in a readable format, use vim -b. A more complex tool is xxd. Look at http://vim.wikia.com/wiki/Hex_dump or man xxd for more info. 
-
-Thursday | 09 Jan 2014 | 23:10:39 | GMT+0530
-[vim] [substitution] [search] [registers] You can substitute the last search pattern in vim either by omitting the search pattern in the :%s command, or by inserting the contents of the search register onto the command line using <C-r>/. <C-r><reg> can be used anywhere to insert the contents of any register <reg>. In this case, the / register contains the last search pattern. 
-
-Wednesday | 08 Jan 2014 | 18:42:16 | GMT+0530
-[numpy] [type casting] To convert data types in numpy or scipy use np.astype 
-
-Wednesday | 08 Jan 2014 | 11:57:07 | GMT+0530
-[adobe acrobat] [reader] [bash completion] Adobe reader messes up bash completion. Delete /etc/bash_completion.d/acroread.sh in order to solve the issue. Why does acroread of all things even need bash completion anyways? Ridiculous. 
-
-Sunday | 05 Jan 2014 | 22:21:21 | GMT+0530
-[C] [C++] [>>] [<<] [right shift operator] [left shift operator] [circularity] The right and left shift operators are NOT circular. http://stackoverflow.com/questions/141525/absolute-beginners-guide-to-bit-shifting 
-
-Friday | 03 Jan 2014 | 17:21:26 | GMT+0530
-[linux] [usermod] [users] [uid] Changing a user id will only change ownership of files that are in that user's home directory. Look at http://stackoverflow.com/questions/18248056/change-user-id-in-linux. Also, you might have to change the group id of the user's group before changing the user and group ids of a user, because the new group must exist before you can change the group id. Doing a man usermod also helps. 
-
-Friday | 03 Jan 2014 | 17:13:10 | GMT+0530
-[linux] [users] [useradd] [adduser] [groups] For a first-level reference on how to use these commands, look at http://blog.pluralsight.com/linux-add-user-command. After that, man adduser. It is nicer than useradd. 
-
-Monday | 23 Dec 2013 | 20:23:51 | GMT+0530
-[bash] [redirection] For a simple bash redirection tutorial, look at http://wiki.bash-hackers.org/howto/redirection_tutorial 
-
-Monday | 23 Dec 2013 | 10:37:15 | GMT+0530
-[numpy] [float] [sizeof] Numpy uses 64-bit floats by default, although supposedly this is implementation dependent. If you are reading this several years from now, then you will have to re-check the validity of this number. In any case, in order to use, say, 32-bit floats instead, use np.float32. You also have a float16 and a float128, as of now. 
-
-Monday | 23 Dec 2013 | 10:23:35 | GMT+0530
-[cpp] [man] [c++] In order to look at the C++ man pages, do a man std_<blah>. For example, man std_list or man std_complex. To see what man pages are available, do an apropos -r "^std_" | grep <blah>. Note that these man pages are available only after you have installed libstdc++6-x.x-doc. 
-
-Friday | 06 Dec 2013 | 10:41:19 | GMT+0530
-[lyx] [hyperlinks] [color] To change the colours of hyperlinks from the default pink, put "\hypersetup{urlcolor=blue}" in the LaTeX preamble. Check these out for more options: http://tex.stackexchange.com/questions/82531/how-to-change-hyperlinks-color-lyx and http://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks 
-
-Monday | 25 Nov 2013 | 21:03:27 | GMT+0530
-[matlab] [scipy] [convert] Look at this SO question to convert matlab code into python/scipy/numpy: http://stackoverflow.com/q/9845292/525169 
-
-Monday | 25 Nov 2013 | 17:19:46 | GMT+0530
-[python] [binary representation] Use the builtin bin() function to convert integers to binary. Use int(binary_repr, 2) to convert back. 
-
-Sunday | 03 Nov 2013 | 23:40:55 | GMT+0530
-[lyx] [fonts] [dejavu] [bera mono] To install DejaVu Sans Mono for lyx typewriter, install Bera Mono instead. It is almost the same. This is available via the package texlive-fonts-extra. You can then select article (noweb) as your document class for scrap, and still get the DejaVu font for code. Note that you cannot use ttf fonts via xetex or luatex when using the article (noweb) document class. I do not yet know why this is the case. 
-
-Friday | 01 Nov 2013 | 19:26:54 | GMT+0530
-[latex] [lyx] [installing fonts] [texmf] Look at http://tex.stackexchange.com/questions/88423/manual-font-installation to install fonts in latex/lyx manually. 
-
-Friday | 18 Oct 2013 | 23:52:18 | GMT+0530
-[vim] [pdf] [ps] Export a vim file in whole or in part to postscript using ":hardcopy >file.ps". Then use "ps2pdf <file.ps>" to convert to pdf. 
-
-Thursday | 03 Oct 2013 | 18:31:37 | GMT+0530
-[matplotlib] [xkcd style plots] http://jakevdp.github.io/blog/2013/07/10/XKCD-plots-in-matplotlib/ 
-
-Sunday | 29 Sep 2013 | 16:56:07 | GMT+0530
-[vim] [word count] Use g<C-g> to find the word count of a document. Also works in visual mode. 
-
-Thursday | 26 Sep 2013 | 21:29:55 | GMT+0530
-[artha] [thesaurus] [wordnet] Apparently, Artha uses a backend program called wn, which is a cli to the WordNet lexical database. man wn for more. 
-
-Tuesday | 24 Sep 2013 | 22:20:30 | GMT+0530
-[kbhit] [getch] [conio] Found an SO answer that gives a unix implementation of conio functions! http://stackoverflow.com/a/448982/525169. I implemented a test code for it here: https://github.com/praveenv253/tests/tree/master/nonblockinginput 
-
-Friday | 20 Sep 2013 | 22:09:00 | GMT+0530
-[gvim] [gedit] [default gui editor] To change the default GUI editor, you simply need to change the corresponding records in the file /usr/share/applications/defaults.list. I just went there and did a :%s/gedit/gvim/g in order to get text files to open in gvim instead of in gedit. 
-
-Sunday | 15 Sep 2013 | 17:33:16 | GMT+0530
-[vim] [filetype] If vim does not detect a filetype correctly, then you can add a modeline at the top of the file (first or second line, I think), which tells vim the filetype. For example, when the tex class file mycv.cls was incorrectly detected (as a Java class file, I presume), I added the modeline "% vim: set filetype=tex :" right at the top. This resolved the problem. Do a :help filetype for more info. 
-
-Saturday | 14 Sep 2013 | 15:44:13 | GMT+0530
-[timing] [profiling] [taskset] [cpuset] [cset] taskset only allows you to set something called the cpu affinity, meaning you can tell the system to run a certain process on some cores only. However, in order to tell the OS to run only your process on a given core, you need to use something called cpuset. This is a pseudo-filesystem which manages how processes are distributed among cores. man cpuset for more info. While cpuset is nice and everything, it is not very intuitive to use, especially if you just want to run your own process(es) separately from the general bunch of system-upkeep processes. A nice interface for cpuset is cset, whose shield command does exactly this. man cset and cset-shield for more info. Also take a look at this tutorial: https://www.suse.com/documentation/slerte_11/slerte_tutorial/data/slerte_tutorial.html. If you are hell bent on using cpuset nonetheless, just remember that moving sbin/init into the system cpuset along with the "general" lot of processes ensures that any newly spawned processes are also restricted to _that_ cpuset. Oh and dont forget to set the cpu_exclusive flag. 
-
-Friday | 13 Sep 2013 | 18:01:01 | GMT+0530
-[chrono] [timing] Dug a little deeper into outputting time durations. It turns out that time_point has a default accuracy that is system-implementation-dependent or something. My system seems to be only microsecond accurate. Read this for more info: http://stackoverflow.com/questions/15777073/how-do-you-print-a-c11-time-point 
-
-Friday | 13 Sep 2013 | 17:04:17 | GMT+0530
-[timing] [profiling] Use the <chrono> library. std::chrono::high_resolution_clock seems to do the trick. It should be giving me nanosecond resolution, but gives me only microsecond resolution. Nevertheless, better than clock() any day! 
-
-Friday | 30 Aug 2013 | 18:19:12 | GMT+0530
-[profiling code] [optimizing] The random-pausing technique: http://stackoverflow.com/questions/375913/what-can-i-use-to-profile-c-code-in-linux/378024#378024 
-
-Thursday | 29 Aug 2013 | 19:00:52 | GMT+0530
-[mv] [rename] [renaming multiple files] man rename. It can be used to rename multiple files. Regex and everything. 
-
-Thursday | 22 Aug 2013 | 21:00:58 | GMT+0530
-[python] [pep8] [formatting] In order to check errors in python formatting, use pep8 (installed with pip). In order to correct these errors automatically, use autopep8. 
-
-Thursday | 22 Aug 2013 | 20:57:45 | GMT+0530
-[paragraph] [formatting] [columns] In order to format paragraphs in text files or in comments in code, use the par program. It seems to be exactly what I need in many cases. 
-
-Wednesday | 21 Aug 2013 | 10:26:18 | GMT+0530
-[formatting code] [astyle] astyle automatically formats C and C++ code. It has a whole bunch of options that can be customized to get different kinds of output. Personally, I find "astyle --style=k/r --indent=tab --break-blocks --delete-empty-lines --pad-oper --align-pointer=name --unpad-paren" to my taste to start with 
-
-Tuesday | 20 Aug 2013 | 18:28:19 | GMT+0530
-[taskset] [process] [CPU] man taskset. Lets you set which processor to run a process on. 
-
-Monday | 22 Jul 2013 | 17:59:08 | GMT+0530
-[cuda] [constant memory] [cudamemcpytosymbol] When using cudaMemcpyToSymbol, you can directly use the name of the variable you are transferring data to. In fact, this is the only way it seems to work. "var", &var, etc. all do not have the desired effect, despite the function seeming to request a const char basecode biophysics builtins copyleft cuda Demos device Docs Doxyfile Doxyfile.full Doxyfile.intermediate Doxyfile.minimal external geom gui hsolve hsolveCuda kinetics ksolve Makefile Makefile2 manager mesh moose moose_vcpp2008 msg nineml NOTES old_gui pymoose python randnum README regressionTests sbml scheduling setup_ setup.py shell signeur smol testReduce threadTests trials utility or a pointer. Also note that if you are including the cudaMemcpyKind, then it is the fifth parameter, not the fourth. The fourth parameter is an offset. 
-
-Sunday | 21 Jul 2013 | 15:10:44 | GMT+0530
-[git] [undo] In order to undo a commit, a reset, a merge, or anything involving refs, just take a look at git reflog and reset to the appropriate HEAD@{n} 
-
-Friday | 19 Jul 2013 | 21:50:03 | GMT+0530
-[git] [commit] [undo amend] In order to undo a git commit --amend, take a look at the git reflog. HEAD@{1} will contain the commit just before the amend (assuming that the amend was made _just_ now). So, reset to HEAD@{1} softly. This will make the erroneous amendment show up in the staging area. Then, you can commit it separately, with git commit -C HEAD@{1}, for example. Note that after resetting, the reflog has changed so that HEAD@{1} is now pointing to the amended commit. Take a look at this link: http://stackoverflow.com/questions/1459150/how-to-undo-git-commit-amend-done-instead-of-git-commit 
-
-Friday | 19 Jul 2013 | 12:33:41 | GMT+0530
-[gdb] [debugging] [python] If you want to debug a C or C++ program that has a python frontend, then run python using gdb. Then, inside gdb, use the "set args" command to set the python script to execute. Run the script until it encounters an issue, at which point you can use backtrace to show you the stack. "help stack" tells you how to examine the stack. 
-
-Tuesday | 16 Jul 2013 | 17:33:31 | GMT+0530
-[C++] [friend] [inheritance] Friendship is NOT inherited. class A { friend class B; }; class B { }; class C : public B { }; => C cannot access private and protected members of A! 
-
-Saturday | 13 Jul 2013 | 19:53:55 | GMT+0530
-[ubuntu] [top menu] [panel] [launcher] Take a look at https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles for adding icons to the top menu or the launcher in ubuntu. 
-
-Thursday | 11 Jul 2013 | 20:32:24 | GMT+0530
-[nvidia] [kernel module] [cuda] You need to reinstall the driver every time you update your linux kernel. This is so that the nvidia kernel module is correctly created inside the appropriate kernel folder. Uninstallation is achieved with "installer.run --uninstall". Reinstallation can be done as usual with "installer.run --optimus" and then selecting the driver for installtion. 
-
-Thursday | 11 Jul 2013 | 13:55:23 | GMT+0530
-[git] [diff] [tab] Customize the tab stop size in git diff by using $ git config --global core.pager "less -x5,9". man less to look at all options. 
-
-Friday | 05 Jul 2013 | 18:18:59 | GMT+0530
-[cuda-gdb] [printf] [cuPrintf] Dont use it. Just dont. Tried and failed far too many times. Use printf instead. It overloads the printf defined by cstdio, so you have to include cstdio for it to work. Also note, cuPrintf is some compatibility thing for compute capability < 2.x. We dont need to worry about it. 
-
-Thursday | 04 Jul 2013 | 14:04:30 | GMT+0530
-[nvidia] [cuda] [suspend] [kernel module] So I was facing this problem wherein the nvidia kernel module seemed to be getting unloaded after the computer was put to sleep. This can be resolved by explicitly adding the nvidia kernel module to the list of modules unloaded and reloaded before/after suspend. You do this by editing/creating the file /etc/pm/config.d/unload_modules. In it, add the following line: SUSPEND_MODULES="$SUSPEND_MODULES nvidia". And thats it! Putting the computer to sleep now will not interfere with cuda executability! http://www.techytalk.info/ubuntu-fix-network-stopped-working-after-resume-from-sleep/
-
-Saturday | 29 Jun 2013 | 11:53:43 | GMT+0530
-[ldd] [object files] [libraries] [dependencies] man ldd. ldd prints shared library dependencies. Useful for checking if you got the order of your arguments wrong while invoking g++ 
-
-Saturday | 29 Jun 2013 | 11:52:07 | GMT+0530
-[nm] [object files] [symbols] man nm. nm lists symbols from object files. Grep the output in order to search for a certain symbol 
-
-Tuesday | 18 Jun 2013 | 22:17:01 | GMT+0530
-[less] [colour] [grep] In order to retain colours when passing output through less, use the -R option. Also ensure that the program sending output is configured to send out colour even if it detects that the output is going to a pipe and not to stdout. For eg. grep will give you colour through a pipe only if you use the --color=always command line argument. --color=auto does not do so. 
-
-Monday | 10 Jun 2013 | 17:20:46 | GMT+0530
-[alt] [HUD] The way to stop the HUD from popping up every time you accidentally press the alt key is similar. Go to System Settings -> Keyboard -> Shortcuts -> Launchers. Disable with backspace. 
-
-Tuesday | 04 Jun 2013 | 12:15:55 | GMT+0530
-[ipython] [config] For ipython configuration information, do ipython config -h. The default ipython profile is located in ~/.config/ipython. This is not present until generated for the first time. To generate, use ipython profile create. 
-
-Monday | 03 Jun 2013 | 10:46:07 | GMT+0530
-[bash] [bash completion] If you want to install a new completion file, for example django_bash_completion, then simply add the script to /etc/bash_completion.d/. The rest is taken care of 
-
-Saturday | 16 Mar 2013 | 14:43:52 | GMT+0530
-[unicode] To find unicode characters by drawing, use shapecatcher.com 
-
-Saturday | 16 Mar 2013 | 14:18:06 | GMT+0530
-[latex] Website to find latex commands by drawing: detexify.kirelabs.org 
+- message: 'Website to find latex commands by drawing: detexify.kirelabs.org'
+  tags:
+  - log message
+  - latex
+  time: 2013-03-16 14:18:06 +0530
+  title: Log message
+- message: To find unicode characters by drawing, use shapecatcher.com
+  tags:
+  - log message
+  - unicode
+  time: 2013-03-16 14:43:52 +0530
+  title: Log message
+- message: If you want to install a new completion file, for example django_bash_completion,
+    then simply add the script to /etc/bash_completion.d/. The rest is taken care
+    of
+  tags:
+  - log message
+  - bash
+  - bash completion
+  time: 2013-06-03 10:46:07 +0530
+  title: Log message
+- message: For ipython configuration information, do ipython config -h. The default
+    ipython profile is located in ~/.config/ipython. This is not present until generated
+    for the first time. To generate, use ipython profile create.
+  tags:
+  - log message
+  - ipython
+  - config
+  time: 2013-06-04 12:15:55 +0530
+  title: Log message
+- message: The way to stop the HUD from popping up every time you accidentally press
+    the alt key is similar. Go to System Settings -> Keyboard -> Shortcuts -> Launchers.
+    Disable with backspace.
+  tags:
+  - log message
+  - alt
+  - HUD
+  time: 2013-06-10 17:20:46 +0530
+  title: Log message
+- message: In order to retain colours when passing output through less, use the -R
+    option. Also ensure that the program sending output is configured to send out
+    colour even if it detects that the output is going to a pipe and not to stdout.
+    For eg. grep will give you colour through a pipe only if you use the --color=always
+    command line argument. --color=auto does not do so.
+  tags:
+  - log message
+  - less
+  - colour
+  - grep
+  time: 2013-06-18 22:17:01 +0530
+  title: Log message
+- message: man nm. nm lists symbols from object files. Grep the output in order to
+    search for a certain symbol
+  tags:
+  - log message
+  - nm
+  - object files
+  - symbols
+  time: 2013-06-29 11:52:07 +0530
+  title: Log message
+- message: man ldd. ldd prints shared library dependencies. Useful for checking if
+    you got the order of your arguments wrong while invoking g++
+  tags:
+  - log message
+  - ldd
+  - object files
+  - libraries
+  - dependencies
+  time: 2013-06-29 11:53:43 +0530
+  title: Log message
+- message: 'So I was facing this problem wherein the nvidia kernel module seemed to
+    be getting unloaded after the computer was put to sleep. This can be resolved
+    by explicitly adding the nvidia kernel module to the list of modules unloaded
+    and reloaded before/after suspend. You do this by editing/creating the file /etc/pm/config.d/unload_modules.
+    In it, add the following line: SUSPEND_MODULES="$SUSPEND_MODULES nvidia". And
+    thats it! Putting the computer to sleep now will not interfere with cuda executability!
+    http://www.techytalk.info/ubuntu-fix-network-stopped-working-after-resume-from-sleep/'
+  tags:
+  - log message
+  - nvidia
+  - cuda
+  - suspend
+  - kernel module
+  time: 2013-07-04 14:04:30 +0530
+  title: Log message
+- message: Dont use it. Just dont. Tried and failed far too many times. Use printf
+    instead. It overloads the printf defined by cstdio, so you have to include cstdio
+    for it to work. Also note, cuPrintf is some compatibility thing for compute capability
+    < 2.x. We dont need to worry about it.
+  tags:
+  - log message
+  - cuda-gdb
+  - printf
+  - cuPrintf
+  time: 2013-07-05 18:18:59 +0530
+  title: Log message
+- message: Customize the tab stop size in git diff by using $ git config --global
+    core.pager "less -x5,9". man less to look at all options.
+  tags:
+  - log message
+  - git
+  - diff
+  - tab
+  time: 2013-07-11 13:55:23 +0530
+  title: Log message
+- message: You need to reinstall the driver every time you update your linux kernel.
+    This is so that the nvidia kernel module is correctly created inside the appropriate
+    kernel folder. Uninstallation is achieved with "installer.run --uninstall". Reinstallation
+    can be done as usual with "installer.run --optimus" and then selecting the driver
+    for installtion.
+  tags:
+  - log message
+  - nvidia
+  - kernel module
+  - cuda
+  time: 2013-07-11 20:32:24 +0530
+  title: Log message
+- message: Take a look at https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles
+    for adding icons to the top menu or the launcher in ubuntu.
+  tags:
+  - log message
+  - ubuntu
+  - top menu
+  - panel
+  - launcher
+  time: 2013-07-13 19:53:55 +0530
+  title: Log message
+- message: 'Friendship is NOT inherited. class A { friend class B; }; class B { };
+    class C : public B { }; => C cannot access private and protected members of A!'
+  tags:
+  - log message
+  - C++
+  - friend
+  - inheritance
+  time: 2013-07-16 17:33:31 +0530
+  title: Log message
+- message: If you want to debug a C or C++ program that has a python frontend, then
+    run python using gdb. Then, inside gdb, use the "set args" command to set the
+    python script to execute. Run the script until it encounters an issue, at which
+    point you can use backtrace to show you the stack. "help stack" tells you how
+    to examine the stack.
+  tags:
+  - log message
+  - gdb
+  - debugging
+  - python
+  time: 2013-07-19 12:33:41 +0530
+  title: Log message
+- message: 'In order to undo a git commit --amend, take a look at the git reflog.
+    HEAD@{1} will contain the commit just before the amend (assuming that the amend
+    was made _just_ now). So, reset to HEAD@{1} softly. This will make the erroneous
+    amendment show up in the staging area. Then, you can commit it separately, with
+    git commit -C HEAD@{1}, for example. Note that after resetting, the reflog has
+    changed so that HEAD@{1} is now pointing to the amended commit. Take a look at
+    this link: http://stackoverflow.com/questions/1459150/how-to-undo-git-commit-amend-done-instead-of-git-commit'
+  tags:
+  - log message
+  - git
+  - commit
+  - undo amend
+  time: 2013-07-19 21:50:03 +0530
+  title: Log message
+- message: In order to undo a commit, a reset, a merge, or anything involving refs,
+    just take a look at git reflog and reset to the appropriate HEAD@{n}
+  tags:
+  - log message
+  - git
+  - undo
+  time: 2013-07-21 15:10:44 +0530
+  title: Log message
+- message: When using cudaMemcpyToSymbol, you can directly use the name of the variable
+    you are transferring data to. In fact, this is the only way it seems to work.
+    "var", &var, etc. all do not have the desired effect, despite the function seeming
+    to request a const char basecode biophysics builtins copyleft cuda Demos device
+    Docs Doxyfile Doxyfile.full Doxyfile.intermediate Doxyfile.minimal external geom
+    gui hsolve hsolveCuda kinetics ksolve Makefile Makefile2 manager mesh moose moose_vcpp2008
+    msg nineml NOTES old_gui pymoose python randnum README regressionTests sbml scheduling
+    setup_ setup.py shell signeur smol testReduce threadTests trials utility or a
+    pointer. Also note that if you are including the cudaMemcpyKind, then it is the
+    fifth parameter, not the fourth. The fourth parameter is an offset.
+  tags:
+  - log message
+  - cuda
+  - constant memory
+  - cudamemcpytosymbol
+  time: 2013-07-22 17:59:08 +0530
+  title: Log message
+- message: man taskset. Lets you set which processor to run a process on.
+  tags:
+  - log message
+  - taskset
+  - process
+  - CPU
+  time: 2013-08-20 18:28:19 +0530
+  title: Log message
+- message: astyle automatically formats C and C++ code. It has a whole bunch of options
+    that can be customized to get different kinds of output. Personally, I find "astyle
+    --style=k/r --indent=tab --break-blocks --delete-empty-lines --pad-oper --align-pointer=name
+    --unpad-paren" to my taste to start with
+  tags:
+  - log message
+  - formatting code
+  - astyle
+  time: 2013-08-21 10:26:18 +0530
+  title: Log message
+- message: In order to format paragraphs in text files or in comments in code, use
+    the par program. It seems to be exactly what I need in many cases.
+  tags:
+  - log message
+  - paragraph
+  - formatting
+  - columns
+  time: 2013-08-22 20:57:45 +0530
+  title: Log message
+- message: In order to check errors in python formatting, use pep8 (installed with
+    pip). In order to correct these errors automatically, use autopep8.
+  tags:
+  - log message
+  - python
+  - pep8
+  - formatting
+  time: 2013-08-22 21:00:58 +0530
+  title: Log message
+- message: man rename. It can be used to rename multiple files. Regex and everything.
+  tags:
+  - log message
+  - mv
+  - rename
+  - renaming multiple files
+  time: 2013-08-29 19:00:52 +0530
+  title: Log message
+- message: 'The random-pausing technique: http://stackoverflow.com/questions/375913/what-can-i-use-to-profile-c-code-in-linux/378024#378024'
+  tags:
+  - log message
+  - profiling code
+  - optimizing
+  time: 2013-08-30 18:19:12 +0530
+  title: Log message
+- message: Use the <chrono> library. std::chrono::high_resolution_clock seems to do
+    the trick. It should be giving me nanosecond resolution, but gives me only microsecond
+    resolution. Nevertheless, better than clock() any day!
+  tags:
+  - log message
+  - timing
+  - profiling
+  time: 2013-09-13 17:04:17 +0530
+  title: Log message
+- message: 'Dug a little deeper into outputting time durations. It turns out that
+    time_point has a default accuracy that is system-implementation-dependent or something.
+    My system seems to be only microsecond accurate. Read this for more info: http://stackoverflow.com/questions/15777073/how-do-you-print-a-c11-time-point'
+  tags:
+  - log message
+  - chrono
+  - timing
+  time: 2013-09-13 18:01:01 +0530
+  title: Log message
+- message: 'taskset only allows you to set something called the cpu affinity, meaning
+    you can tell the system to run a certain process on some cores only. However,
+    in order to tell the OS to run only your process on a given core, you need to
+    use something called cpuset. This is a pseudo-filesystem which manages how processes
+    are distributed among cores. man cpuset for more info. While cpuset is nice and
+    everything, it is not very intuitive to use, especially if you just want to run
+    your own process(es) separately from the general bunch of system-upkeep processes.
+    A nice interface for cpuset is cset, whose shield command does exactly this. man
+    cset and cset-shield for more info. Also take a look at this tutorial: https://www.suse.com/documentation/slerte_11/slerte_tutorial/data/slerte_tutorial.html.
+    If you are hell bent on using cpuset nonetheless, just remember that moving sbin/init
+    into the system cpuset along with the "general" lot of processes ensures that
+    any newly spawned processes are also restricted to _that_ cpuset. Oh and dont
+    forget to set the cpu_exclusive flag.'
+  tags:
+  - log message
+  - timing
+  - profiling
+  - taskset
+  - cpuset
+  - cset
+  time: 2013-09-14 15:44:13 +0530
+  title: Log message
+- message: 'If vim does not detect a filetype correctly, then you can add a modeline
+    at the top of the file (first or second line, I think), which tells vim the filetype.
+    For example, when the tex class file mycv.cls was incorrectly detected (as a Java
+    class file, I presume), I added the modeline "% vim: set filetype=tex :" right
+    at the top. This resolved the problem. Do a :help filetype for more info.'
+  tags:
+  - log message
+  - vim
+  - filetype
+  time: 2013-09-15 17:33:16 +0530
+  title: Log message
+- message: To change the default GUI editor, you simply need to change the corresponding
+    records in the file /usr/share/applications/defaults.list. I just went there and
+    did a :%s/gedit/gvim/g in order to get text files to open in gvim instead of in
+    gedit.
+  tags:
+  - log message
+  - gvim
+  - gedit
+  - default gui editor
+  time: 2013-09-20 22:09:00 +0530
+  title: Log message
+- message: 'Found an SO answer that gives a unix implementation of conio functions!
+    http://stackoverflow.com/a/448982/525169. I implemented a test code for it here:
+    https://github.com/praveenv253/tests/tree/master/nonblockinginput'
+  tags:
+  - log message
+  - kbhit
+  - getch
+  - conio
+  time: 2013-09-24 22:20:30 +0530
+  title: Log message
+- message: Apparently, Artha uses a backend program called wn, which is a cli to the
+    WordNet lexical database. man wn for more.
+  tags:
+  - log message
+  - artha
+  - thesaurus
+  - wordnet
+  time: 2013-09-26 21:29:55 +0530
+  title: Log message
+- message: Use g<C-g> to find the word count of a document. Also works in visual mode.
+  tags:
+  - log message
+  - vim
+  - word count
+  time: 2013-09-29 16:56:07 +0530
+  title: Log message
+- message: http://jakevdp.github.io/blog/2013/07/10/XKCD-plots-in-matplotlib/
+  tags:
+  - log message
+  - matplotlib
+  - xkcd style plots
+  time: 2013-10-03 18:31:37 +0530
+  title: Log message
+- message: Export a vim file in whole or in part to postscript using ":hardcopy >file.ps".
+    Then use "ps2pdf <file.ps>" to convert to pdf.
+  tags:
+  - log message
+  - vim
+  - pdf
+  - ps
+  time: 2013-10-18 23:52:18 +0530
+  title: Log message
+- message: Look at http://tex.stackexchange.com/questions/88423/manual-font-installation
+    to install fonts in latex/lyx manually.
+  tags:
+  - log message
+  - latex
+  - lyx
+  - installing fonts
+  - texmf
+  time: 2013-11-01 19:26:54 +0530
+  title: Log message
+- message: To install DejaVu Sans Mono for lyx typewriter, install Bera Mono instead.
+    It is almost the same. This is available via the package texlive-fonts-extra.
+    You can then select article (noweb) as your document class for scrap, and still
+    get the DejaVu font for code. Note that you cannot use ttf fonts via xetex or
+    luatex when using the article (noweb) document class. I do not yet know why this
+    is the case.
+  tags:
+  - log message
+  - lyx
+  - fonts
+  - dejavu
+  - bera mono
+  time: 2013-11-03 23:40:55 +0530
+  title: Log message
+- message: Use the builtin bin() function to convert integers to binary. Use int(binary_repr,
+    2) to convert back.
+  tags:
+  - log message
+  - python
+  - binary representation
+  time: 2013-11-25 17:19:46 +0530
+  title: Log message
+- message: 'Look at this SO question to convert matlab code into python/scipy/numpy:
+    http://stackoverflow.com/q/9845292/525169'
+  tags:
+  - log message
+  - matlab
+  - scipy
+  - convert
+  time: 2013-11-25 21:03:27 +0530
+  title: Log message
+- message: 'To change the colours of hyperlinks from the default pink, put "\hypersetup{urlcolor=blue}"
+    in the LaTeX preamble. Check these out for more options: http://tex.stackexchange.com/questions/82531/how-to-change-hyperlinks-color-lyx
+    and http://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks'
+  tags:
+  - log message
+  - lyx
+  - hyperlinks
+  - color
+  time: 2013-12-06 10:41:19 +0530
+  title: Log message
+- message: In order to look at the C++ man pages, do a man std_<blah>. For example,
+    man std_list or man std_complex. To see what man pages are available, do an apropos
+    -r "^std_" | grep <blah>. Note that these man pages are available only after you
+    have installed libstdc++6-x.x-doc.
+  tags:
+  - log message
+  - cpp
+  - man
+  - c++
+  time: 2013-12-23 10:23:35 +0530
+  title: Log message
+- message: Numpy uses 64-bit floats by default, although supposedly this is implementation
+    dependent. If you are reading this several years from now, then you will have
+    to re-check the validity of this number. In any case, in order to use, say, 32-bit
+    floats instead, use np.float32. You also have a float16 and a float128, as of
+    now.
+  tags:
+  - log message
+  - numpy
+  - float
+  - sizeof
+  time: 2013-12-23 10:37:15 +0530
+  title: Log message
+- message: For a simple bash redirection tutorial, look at http://wiki.bash-hackers.org/howto/redirection_tutorial
+  tags:
+  - log message
+  - bash
+  - redirection
+  time: 2013-12-23 20:23:51 +0530
+  title: Log message
+- message: For a first-level reference on how to use these commands, look at http://blog.pluralsight.com/linux-add-user-command.
+    After that, man adduser. It is nicer than useradd.
+  tags:
+  - log message
+  - linux
+  - users
+  - useradd
+  - adduser
+  - groups
+  time: 2014-01-03 17:13:10 +0530
+  title: Log message
+- message: Changing a user id will only change ownership of files that are in that
+    user's home directory. Look at http://stackoverflow.com/questions/18248056/change-user-id-in-linux.
+    Also, you might have to change the group id of the user's group before changing
+    the user and group ids of a user, because the new group must exist before you
+    can change the group id. Doing a man usermod also helps.
+  tags:
+  - log message
+  - linux
+  - usermod
+  - users
+  - uid
+  time: 2014-01-03 17:21:26 +0530
+  title: Log message
+- message: The right and left shift operators are NOT circular. http://stackoverflow.com/questions/141525/absolute-beginners-guide-to-bit-shifting
+  tags:
+  - log message
+  - C
+  - C++
+  - '>>'
+  - '<<'
+  - right shift operator
+  - left shift operator
+  - circularity
+  time: 2014-01-05 22:21:21 +0530
+  title: Log message
+- message: Adobe reader messes up bash completion. Delete /etc/bash_completion.d/acroread.sh
+    in order to solve the issue. Why does acroread of all things even need bash completion
+    anyways? Ridiculous.
+  tags:
+  - log message
+  - adobe acrobat
+  - reader
+  - bash completion
+  time: 2014-01-08 11:57:07 +0530
+  title: Log message
+- message: To convert data types in numpy or scipy use np.astype
+  tags:
+  - log message
+  - numpy
+  - type casting
+  time: 2014-01-08 18:42:16 +0530
+  title: Log message
+- message: You can substitute the last search pattern in vim either by omitting the
+    search pattern in the :%s command, or by inserting the contents of the search
+    register onto the command line using <C-r>/. <C-r><reg> can be used anywhere to
+    insert the contents of any register <reg>. In this case, the / register contains
+    the last search pattern.
+  tags:
+  - log message
+  - vim
+  - substitution
+  - search
+  - registers
+  time: 2014-01-09 23:10:39 +0530
+  title: Log message
+- message: To open binary files in a readable format, use vim -b. A more complex tool
+    is xxd. Look at http://vim.wikia.com/wiki/Hex_dump or man xxd for more info.
+  tags:
+  - log message
+  - vim
+  - hex
+  - binary files
+  time: 2014-01-18 16:52:39 +0530
+  title: Log message
+- message: To insert characters with a certain ascii code in vim, use <C-v><code>.
+    For example, <C-v>178 will print the squared symbol. I think only three digit
+    codes are supported, since ascii has only 256 characters.
+  tags:
+  - log message
+  - vim
+  - ascii
+  time: 2014-01-18 16:54:56 +0530
+  title: Log message
+- message: 'In order to have your xmodmap commands take effect, put them in .xsessionrc,
+    NOT .xinitrc. Take a look at this: http://askubuntu.com/questions/150487/what-happens-under-the-covers-to-log-me-in-and-start-up-the-unity-graphics-user.
+    Also, man xmodmap for a few examples of remapping keys.'
+  tags:
+  - log message
+  - xinitrc
+  - X
+  - xsessionrc
+  time: 2014-01-29 18:55:44 +0530
+  title: Log message
+- message: In order to add only some lines of a file for committing, use git add -p
+    <filename>. If the file is new, use git add -N <filename>. Look up http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git
+    for more.
+  tags:
+  - log message
+  - git
+  - add
+  - staging
+  time: 2014-02-02 17:12:10 +0530
+  title: Log message
+- message: 'You can save and restore macros by using #pragma push_macro("<macro_name>")
+    and #pragma pop_macro("<macro_name>") respectively! This means that you can temporarily
+    redefine macros! For example, I used this to temporarily redefine GSL_REAL to
+    std::real, and then define it back once the need had passed.'
+  tags:
+  - log message
+  - gcc
+  - preprocessor
+  - macros
+  time: 2014-02-03 19:00:46 +0530
+  title: Log message
+- message: 'Often what happens is that the proxy settings that are set via the command
+    line are not reflected when executing sudo apt-get update/upgrade. The reason
+    this happens is because root has a different set of environment variables than
+    the ones that the user calling sudo does. In order to pass on environment variables
+    to root when executing sudo, you need to edit the /etc/sudoers file. WARNING:
+    Editing this file is dangerous. A corrupted sudoers file may prevent you from
+    using sudo mode. Always use visudo to edit the sudoers file. The sudoers file,
+    by default, has a setting that goes Defaults env_reset. This resets all but a
+    few key environment variables. In order to retain variables of your choice, you
+    need to add them to the "env_keep" list. This goes: "Defaults env_keep += "http_proxy
+    https_proxy ftp_proxy", for example. man sudoers. Also man visudo. Take a look
+    at https://help.ubuntu.com/community/AptGet/Howto for more apt options. Take a
+    look at http://stackoverflow.com/questions/8633461/how-to-keep-environment-variables-when-using-sudo
+    regarding retaining environment variables while using sudo.'
+  tags:
+  - log message
+  - apt
+  - proxy
+  - sudoers
+  time: 2014-02-11 12:29:20 +0530
+  title: Log message
+- message: 'If you accidentally corrupt your /etc/sudoers file (usually by reading
+    it without sudo, incorrectly interpreting that it is empty, and then writing into
+    it _with_ sudo, and finally being unable to correct it because you can no longer
+    use sudo mode), there is a way out. You can use pkexec visudo, which will allow
+    you to edit the sudoers file, provided you are authorized to run programs as root
+    with PolicyKit. Find the default /etc/sudoers file online: https://wiki.debian.org/sudo.
+    In case you are not authorized via PolicyKit, you can still edit the sudoers file
+    using a live CD. Mount the computer hard drive at /mnt, say, and then sudo visudo
+    -f /mnt/etc/sudoers. Courtesy of http://askubuntu.com/questions/73864. Of course,
+    man sudoers and man visudo will tell you more as well.'
+  tags:
+  - log message
+  - sudoers
+  - file corruption
+  time: 2014-02-11 12:46:08 +0530
+  title: Log message
+- message: 'If you have defined a variable in a header file and not declared it as
+    const, like so: double e = 2.71; then the compiler will treat it as a separate
+    variable in each translation unit. So if you link two such translation units together
+    under the same object later, you will get a multiple definition error, or something
+    like "already defined in...". To solve this issue, mark this variable as static
+    const (in C), or as simply const (in C++, where static is implied for const variables).
+    What this does is to make the linkage of this variable definition _internal_,
+    meaning that once this definition gets #included into a .c or .cpp file, the definition
+    stays there. It does not have scope outside of the translation unit, and thus
+    cannot be seen by the other object files. On the other hand, the addresses of
+    each of these "copies" of the constant in different translation units will be
+    different. To have a "true" global constant this way, you will need to have an
+    "extern const double e;" in your header file, followed by a "const double e =
+    2.71;" in a separate source file, which is compiled into a separate object file,
+    _which_ then gets linked with all the other objects. Courtesy of http://stackoverflow.com/questions/2328671/constant-variables-not-working-in-header.'
+  tags:
+  - log message
+  - C
+  - C++
+  - headers
+  - const
+  - static
+  - multiple definition error
+  time: 2014-02-18 00:44:49 +0530
+  title: Log message
+- message: Note that in order for vim modelines to work, you must have the 'modeline'
+    option *set*, i.e. :set modeline. Do a :help modeline for more info.
+  tags:
+  - log message
+  - vim
+  - modeline
+  - filetype
+  time: 2014-02-26 17:16:40 +0530
+  title: Log message
+- message: '"The implementation of a non-specialized template must be visible to a
+    translation unit that uses it. The compiler must be able to see the implementation
+    in order to generate code for all specializations in your code." What this essentially
+    means is that you cannot define an external templated function in the typical
+    way: have the template function declaration in the header, followed by an implementation
+    of the template function in a C++ file, which then gets compiled into an object
+    file, and later gets linked with the main program. This method does not work.
+    Why? Because the compiler needs to "know" what the "full" definition of the function
+    is (with actual classes of the templated types) in order to actually compile the
+    program. A template function is simply a sort of shorthand for writing many functions
+    of that do the same thing with different data types; but the compiler still needs
+    to actually create "specializations" of this template for each type that actually
+    gets used. That is the only way it can generate object code. Check out http://stackoverflow.com/questions/10632251/undefined-reference-to-template-function
+    on ways to resolve this issue. One method involves putting the implementation
+    in the header. The other method involves pre-defining the specializations.'
+  tags:
+  - log message
+  - C++
+  - templates
+  - template functions
+  time: 2014-03-15 22:52:34 +0530
+  title: Log message
+- message: When linking object files (static libraries) into an executable, the order
+    in which you give the libraries matters. For simple scenarios where there are
+    no cyclic references, the *dependent* library should come on the left, and the
+    library which *provides said dependency* should come on the right. Take a look
+    at http://stackoverflow.com/questions/45135/linker-order-gcc to see a diagrammatic
+    view of this, and also to see how cyclic dependencies can be resolved.
+  tags:
+  - log message
+  - g++
+  - gcc
+  - ld
+  - C++
+  - C
+  - make
+  time: 2014-03-15 22:55:56 +0530
+  title: Log message
+- message: To get ipython-like command completion in bash, i.e. to make it so that
+    bash will only search the subset of history that starts with letters you have
+    already entered so far (thus making it easier to search through history, without
+    having to use the unwieldy Ctrl-R), you need to add a few lines to .inputrc. Take
+    a look at http://askubuntu.com/questions/12368/ipython-like-command-history-for-shell
+    for more.
+  tags:
+  - log message
+  - bash
+  - command history
+  - completion
+  time: 2014-04-05 11:59:57 +0530
+  title: Log message
+- message: Use the select module in python for non-blocking input. Look at my tuner
+    program for an example of its usage.
+  tags:
+  - log message
+  - python
+  - non blocking input
+  - select
+  time: 2014-04-24 18:59:41 +0530
+  title: Log message
+- message: To remove lines the object oriented way in matplotlib (using axes, etc.)
+    take a look at my tuner program for an example. Alternatively, look at the fitzhugh-nagumo
+    assignment of the computational neuroscience course.
+  tags:
+  - log message
+  - python
+  - matplotlib
+  - removing lines
+  time: 2014-04-24 19:01:34 +0530
+  title: Log message
+- message: You can find out your glibc version by running ldd --version. You can also
+    do a locate libc.so.6 and then execute the shared library like a program. This
+    actually displays the version and some additional compile information.
+  tags:
+  - log message
+  - glibc version
+  - ldd
+  time: 2014-05-04 22:46:39 +0530
+  title: Log message
+- message: In order to create a pair of RSA keys, use ssh-keygen -t rsa -C "user@host".
+    The -C option is optional, but can be used to put your email address into the
+    key.
+  tags:
+  - log message
+  - ssh
+  - keygen
+  - id_rsa
+  time: 2014-05-05 16:43:58 +0530
+  title: Log message
+- message: In order to make applications that you can "summon" from X, say by double-clicking
+    on a file in nautilus, you need to create a .desktop file corresponding to your
+    application. To figure out how to do this, look at https://help.ubuntu.com/community/UnityLaunchersAndDesktopFiles.
+    tvim.desktop makes for a good template. I have also made a couple of notes in
+    misc/tvim.sh.
+  tags:
+  - log message
+  - ubuntu
+  - launcher
+  - desktop
+  - tvim
+  time: 2014-05-13 22:52:00 +0530
+  title: Log message
+- message: 'Check out some choices on fonts for a thesis: http://www.khirevich.com/latex/font/.
+    They use Bitstream Charter for the main body text and Computer Modern for the
+    math.'
+  tags:
+  - log message
+  - latex
+  - thesis
+  - font
+  time: 2014-06-09 14:42:01 +0530
+  title: Log message
+- message: Firefox doesnt change tabs with Ctrl+PgUp or Ctrl+PgDn when you are focused
+    on a text input field. To fix this, install the "free control" add-on. https://addons.mozilla.org/en-US/firefox/addon/free-control/
+  tags:
+  - log message
+  - firefox
+  - tabs
+  - ctrl pgup
+  - ctrl pgdn
+  time: 2014-06-13 18:32:11 +0530
+  title: Log message
+- message: 'I was trying to find a method to get Rhythmbox to stop after the current
+    track. I found a plugin that does this, but it is old, and the manual installation
+    does not work. Instead, I found this: http://askubuntu.com/questions/147942/how-do-i-install-third-party-rhythmbox-plugins,
+    which seems more future-proof.'
+  tags:
+  - log message
+  - rhythmbox
+  - stop after current track
+  - plugins
+  time: 2014-06-14 17:48:04 +0530
+  title: Log message
+- message: When trying to change fonts in matplotlib, you might run into an error
+    that says that the font or the font family was not found. To fix this, you need
+    to actually add the font to matplotlibs font database. For me, this is in /usr/share/matplotlib/mpl-data/fonts/ttf.
+    Create a symbolic link to the font of your choice over here. Then use the _name_
+    of font package - open the font file with the default Font Viewer for this - in
+    matplotlibrc to set your font preference.
+  tags:
+  - log message
+  - matplotlib
+  - fonts
+  time: 2014-06-14 22:33:13 +0530
+  title: Log message
+- message: In order to find out which headers each .cpp file requires, perform a g++
+    -MM file.cpp. This lists out the dependencies for converting file.cpp into an
+    object file. man g++ and do a /-M for the whole list of sub-options. -MM does
+    not list system libraries.
+  tags:
+  - log message
+  - g++
+  - make
+  - dependencies
+  time: 2014-06-26 00:45:40 +0530
+  title: Log message
+- message: 'In order to solve the problem of a slow wireless connection on Thinkpads
+    running Ubuntu 12.04 (and possibly later versions as well), disable the N-mode
+    (IEEE802.11n) as described here: http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards'
+  tags:
+  - log message
+  - thinkpad
+  - intel
+  - slow wifi
+  time: 2014-07-04 16:15:17 +0530
+  title: Log message
+- message: Encrypt a file with gpg -c <file>. Decrypt with gpg <file>. Be sure to
+    delete the un-encrypted file after encryption. shred it, perhaps.
+  tags:
+  - log message
+  - encryption
+  - gpg
+  time: 2014-07-14 00:47:50 +0530
+  title: Log message
+- message: 'Here is a nice tutorial on installing ruby on ubuntu: http://ryanbigg.com/2010/12/ubuntu-ruby-rvm-rails-and-you/'
+  tags:
+  - log message
+  - ruby
+  - ubuntu
+  - installtion
+  time: 2014-07-20 17:56:33 +0530
+  title: Log message
+- message: 'Tools for improving your efficiency with the terminal: https://github.com/rupa/z/
+    and https://github.com/sjl/t/'
+  tags:
+  - log message
+  - terminal
+  - bash
+  - z
+  - t
+  time: 2014-07-23 12:18:28 +0530
+  title: Log message
+- message: 'A possible method to ease the pain of parsing arguments in bash: man getopt.
+    Note that this is GNU getopt in linux, by default. The non-GNU getopt is apparently
+    "fundamentally broken". Read http://stackoverflow.com/questions/402377/using-getopts-in-bash-shell-script-to-get-long-and-short-command-line-options.'
+  tags:
+  - log message
+  - bash
+  - arguments
+  - parsing
+  - getopt
+  time: 2014-07-23 16:02:23 +0530
+  title: Log message
+- message: In order to get a time-stamped command line history for bash, look up the
+    HISTTIMEFORMAT setting in the man pages for bash. My HISTTIMEFORMAT is currently
+    set to "%F %T ", to understand which you have to look at the arguments to strftime(3).
+    %F means YYYY-MM-DD and %T means hh:mm:ss. These time stamps are stored in a weird
+    fashion, possibly seconds from epoch or something, so you cannot understand them
+    by just looking at the .bash_history file. Instead, use the "history" command.
+    Here, the timestamps are formatted as requested. To find out more, do a help history
+    (not man! - this is a bash thing).
+  tags:
+  - log message
+  - bash
+  - history
+  - timestamp
+  time: 2014-07-23 18:07:20 +0530
+  title: Log message
+- message: Use the FIGNORE environment variable to tell bash to ignore certain file
+    extensions while performing tab completion.
+  tags:
+  - log message
+  - bash
+  - fignore
+  - tab completion
+  time: 2014-09-04 22:41:12 -0400
+  title: Log message
+- message: To check out CPU utilization using a fancier top command, try htop.
+  tags:
+  - log message
+  - top
+  - htop
+  - processor utilization
+  time: 2014-09-19 23:18:46 -0400
+  title: Log message
+- message: In bash, single-quotation causes _all_ characters within to be treated
+    as literal. "A single quotation mark may not appear within single quotes; not
+    even when preceded by a backslash." - From the man pages of bash.
+  tags:
+  - log message
+  - bash
+  - single quotes
+  time: 2014-09-22 15:44:09 -0400
+  title: Log message
+- message: I made the .vim/bundle folder into a repo of submodules. In order to successfully
+    clone and set up this folder, first clone bundle, then run git submodule init
+    followed by git submodule update in that folder.
+  tags:
+  - log message
+  - vim-bundle
+  - git
+  - submodules
+  time: 2014-09-28 17:50:59 -0400
+  title: Log message
+- message: 'When I ssh-ed into the ece server, inputrc was not loaded by default.
+    So command-line history was not iPython-like. To make this happen, just press
+    Ctrl-X Ctrl-R in bash. It re-reads the init file, i.e. reloads commands from .inputrc.
+    Source: http://superuser.com/questions/241187/how-do-i-reload-inputrc. Reference:
+    http://www.gnu.org/software/bash/manual/bashref.html#Miscellaneous-Commands'
+  tags:
+  - log message
+  - bash
+  - inputrc
+  - reload
+  time: 2014-09-28 18:36:16 -0400
+  title: Log message
+- message: My ~/.bashrc file was not getting automatically loaded when I ssh-ed into
+    the ece server. Turns out that you need a ~/.profile file, which tells bash to
+    load ~/.bashrc. So I copied the default ~/.profile file from my computer.
+  tags:
+  - log message
+  - profile
+  - bashrc
+  time: 2014-09-28 18:41:52 -0400
+  title: Log message
+- message: 'In order to expand the number of dimensions of a numpy array, there are
+    several options: np.expand_dims(x, axis=1) or x[:, np.newaxis] or x[:, None].
+    Refer to http://docs.scipy.org/doc/numpy/reference/generated/numpy.expand_dims.html.'
+  tags:
+  - log message
+  - numpy
+  - ndarray
+  - expanding dimensions
+  time: 2014-10-30 02:14:03 -0400
+  title: Log message
+- message: http://stackoverflow.com/questions/4700614/how-to-put-the-legend-out-of-the-plot
+  tags:
+  - log message
+  - matplotlib
+  - legend outside plot
+  time: 2014-12-14 13:05:27 +0530
+  title: Log message
+- message: 'To make nautilus open windows in front of the terminal in 14.04, install
+    compizconfig-settings-manager and set the "Focus Prevention Level" to "Off" under
+    "General Options" > "Focus and raise behaviour". Reference: http://askubuntu.com/questions/365030/how-to-make-nemo-start-in-foreground'
+  tags:
+  - log message
+  - nautilus
+  - foreground
+  time: 2014-12-16 10:32:23 +0530
+  title: Log message
+- message: 'To get the "Open in terminal" command in the right-click menu of nautilus,
+    install nautilus-open-terminal and nautilus-actions. Then restart nautilus with
+    nautilus -q. Reference: http://askubuntu.com/questions/450280/open-in-terminal-action-in-nautilus-in-ubuntu-14-04.'
+  tags:
+  - log message
+  - nautilus
+  - right click
+  - open in terminal
+  time: 2014-12-16 10:36:30 +0530
+  title: Log message
+- message: 'Remapping Caps Lock to Control in 14.04 was one of the biggest headaches
+    in a long long time. But here is what you have to do: http://www.linux.com/learn/tutorials/769644-hacking-your-linux-keyboard-with-xkb
+    shows you how you can use xkb to make modifications to key functions. But it does
+    not list all possible modifications that exist. To see what modifications xkb
+    already provides, take a look at /usr/share/X11/xkb/symbols. There are files called
+    "ctrl" and "capslock" and such. The file ctrl, for example, has a modification
+    called "nocaps". You can now use this modification from command line by saying:
+    setxkbmap -option "ctrl:nocaps". Another modification I liked was "shift:both_capslock",
+    which toggles caps lock when you press both shift keys together. To be continued...'
+  tags:
+  - log message
+  - remap
+  - caps lock
+  - ctrl
+  - '14.04'
+  time: 2014-12-16 11:32:00 +0530
+  title: Log message
+- message: How do you make the settings described in the previous log message permanent?
+    The first thing you need to do is to install dconf-editor. Open it up and go to
+    org > gnome > desktop > input-sources. Here, there is an xkb-options setting.
+    This is where you need to place your modifications. So change xkb-options to ['shift:both_capslock','ctrl:nocaps'].
+    This should take effect immediately and work fine on login. However, it will only
+    work as long as you stay with the same keyboard configuration. If you change keyboard
+    configurations, the xkb-options setting gets reset, and will not continue to work.
+  tags:
+  - log message
+  - remap
+  - caps lock
+  - ctrl
+  - '14.04'
+  time: 2014-12-16 11:38:45 +0530
+  title: Log message
+- message: Remapping PrtSc to Menu requires that you define your own xkb modification.
+    I have added the modified versions of the relevant configuration files to the
+    misc repository, along with a README containing some explanantions.
+  tags:
+  - log message
+  - remap keys
+  - prtsc
+  - menu
+  - '14.04'
+  time: 2014-12-16 14:07:12 +0530
+  title: Log message
+- message: 'Nautilus shows hidden files by default when opened from command line.
+    To fix this, go to dconf-editor, and under org->gtk->settings->file-chooser, uncheck
+    show-hidden. Link: http://ubuntuforums.org/showthread.php?t=2133298&s=cc010bab19c680d2f485dd0eb8575a28&p=12623240#post12623240'
+  tags:
+  - log message
+  - nautilus
+  - hidden files
+  - default
+  time: 2015-03-03 20:57:30 -0500
+  title: Log message
+- message: Note that there are multiple numpy/scipy functions that do regression,
+    fitting, etc. Of these, scipy.stats.linregress fits a line and forces an intercept.
+    You do not have to explicitly add 1s or anything. numpy.linalg.lstsq does plain
+    old linear regression - your inputs can even be matrices. It simply returns argmin
+    |ax - b|^2 for given a and b, and therefore does not force an intercept. The last
+    one I want to mention is scipy.optimize.leastsq. This one is a non-linear least
+    squares solver, and I know nothing more about it.
+  tags:
+  - log message
+  - numpy
+  - scipy
+  - linear regression
+  time: 2015-03-22 03:14:02 -0400
+  title: Log message
+- message: Gimp imports multi-page pdfs as one layer-per-page. But it does not re-export
+    multi-layer figures as a multi-page pdf, with one page-per-layer. It just exports
+    the topmost visible layer. I found a solution for this here http://registry.gimp.org/node/25400.
+    You need to reverse the order of layers, export the project as a .mng animation.
+    Then, from command line, call convert file.mng file.pdf. Apparently, for convert
+    to work, you need to have ImageMagick installed, but I think I had it by default.
+  tags:
+  - log message
+  - gimp
+  - export
+  - pdf
+  time: 2015-04-02 11:46:10 -0400
+  title: Log message
+- message: To save a figure with specific dimensions, look at http://www.mathworks.com/help/matlab/creating_plots/save-figure-at-specific-size-and-resolution.html
+  tags:
+  - log message
+  - matlab
+  - figure
+  - maintain dimensions
+  time: 2015-06-10 09:46:12 -0400
+  title: Log message
+- message: In order to generate tag pages in jekyll, look at [this](http://charliepark.org/tags-in-jekyll/).
+  tags:
+  - log message
+  - jekyll
+  - tags
+  time: 2015-06-17 02:13:52 -0400
+  title: Log message
+- message: You can find a good reference for git notes [here](https://git-scm.com/blog/2010/08/25/notes.html).
+    Also, of course, `git help notes`. Notes can be used, for instance, to add extra
+    information to a commit without actually changing the hash of the commit (as amend
+    does). This proved useful when I had to add a note to correct an erroneous commit
+    message that I also accidentally pushed to the server - the [misc repository](https://github.com/praveenv253/misc)
+    if you are wondering.
+  tags:
+  - log message
+  - git
+  - notes
+  - commits
+  time: 2015-06-20 17:11:05 -0400
+  title: Log message
+- message: 'In order to recursively set AFS ACL permissions for a directory, you need
+    to manually use `find -exec` as follows: `find <dir> -type d -exec fs sa {} <user>
+    <permissions> \;`. [Here](http://kb.mit.edu/confluence/pages/viewpage.action?pageId=3907138)
+    is the reference for this.'
+  tags:
+  - log message
+  - afs
+  - acl
+  - file permissions
+  time: 2015-06-22 02:21:04 -0400
+  title: Log message
+- message: 'To learn about the linux filesystem hierarchy, i.e., root directory structure,
+    look here: http://www.tldp.org/LDP/Linux-Filesystem-Hierarchy/html/'
+  tags:
+  - log message
+  - linux
+  - filesystem hierarchy
+  - directory structure
+  time: 2015-07-03 00:05:47 -0400
+  title: Log message
+- message: How do you automatically get vim to do PEP8-style indentation for python
+    code? Look up [this](http://henry.precheur.org/vim/python.html) blog post which
+    references [this](http://www.vim.org/scripts/script.php?script_id=974) vim script.
+    It has also been added to the dotvim repo.
+  tags:
+  - log message
+  - vim
+  - python
+  - indentation
+  time: 2016-01-07 00:33:56 +0530
+  title: Log message
+- message: 'Installing scikit-learn via pip on a machine with no sudo privileges,
+    and a static ATLAS lib can be a nightmare if you do not know what you are doing:
+    the idea is to use the --global-option flag of pip install to pass extra commands
+    to build_ext. See [this](http://stackoverflow.com/a/22942120/525169) SO answer.
+    In this particular instance, you probably want to use something like --global-option=build_ext
+    --global-option=-I/path/to/include --global-option=-L/path/to/lib --global-option=-latlas
+    --global-option=-lcblas ... scikit-learn (where ... is for the other blas libs).
+    Also see [this](http://scikit-learn-general.narkive.com/FSKFd98i/on-building-scikit-learn-0-14-1-with-static-atlas-on-non-standard-location)
+    thread, which helped me out with these options'
+  tags:
+  - log message
+  - atlas
+  - blas
+  - lapack
+  - scikit-learn
+  - pip
+  - install
+  time: 2016-02-14 04:41:56 -0500
+  title: Log message
+- message: To terminate an unresponsive ssh session, press `<Return>~.`, as explained,
+    with more such commands, [here](http://askubuntu.com/questions/29942/how-can-i-break-out-of-ssh-when-it-locks)
+  tags:
+  - log message
+  - ssh
+  - kill
+  time: 2016-02-16 22:59:43 -0500
+  title: Log message
+- message: 'Test whether or not sudo is using the environment you expect by creating
+    a small test script with `echo $HOME` for instance, and then running it as `sudo
+    bash test.sh`. Note that testing the environment with `sudo echo $HOME` will *not*
+    work, as bash expands `$HOME` before the command gets hit with sudo. The best
+    way to get sudo to use the environment *you* want for a one-time job is to simply
+    supply the environment variable while executing: `sudo HOME=/home/praveen pip3
+    install numpy`. For a more permanent solution, edit the /etc/sudoers file using
+    `sudo visudo`.'
+  tags:
+  - log message
+  - sudo
+  - environment
+  time: 2016-04-08 00:22:21 -0400
+  title: Log message
+- message: 'To install cvxopt linked to Intel MKL using pip, set environment variables
+    in the installation commands as follows: `sudo CVXOPT_BLAS_LIB_DIR=/opt/intel/mkl/lib/intel64
+    CVXOPT_BLAS_LIB=mkl_rt CVXOPT_LAPACK_LIB=mkl_rt HOME=$HOME pip3 install cvxopt`.
+    It is as easy as that! To see more configuration options, download the cvxopt
+    source files and look at the `setup.py` script. It lists which environment variables
+    you can set.'
+  tags:
+  - log message
+  - python
+  - cvxopt
+  - pip
+  - mkl
+  time: 2016-04-17 19:35:35 -0400
+  title: Log message
+- message: 'To convert a pdf document into one containing two pages per side, simply
+    `man pdfnup`. This is a convenient frontend to the more complex `pdfjam`. For
+    most purposes, this should suffice: `pdfnup --paper letter document.pdf`, which
+    will produce a `document-nup.pdf` in the current directory, with two pages per
+    side in landscape orientation.'
+  tags:
+  - log message
+  - pdf
+  - builtins
+  - two pages per side
+  time: 2016-04-19 23:38:17 -0400
+  title: Log message
+- message: 'Take a look at [this](https://www.rackaid.com/blog/linux-screen-tutorial-and-how-to/)
+    for a nice, short tutorial on screen. Be warned: screen and my shortcuts in vim
+    do not seem to interact very well.'
+  tags:
+  - log message
+  - screen
+  time: 2016-05-03 16:29:03 -0400
+  title: Log message
+- message: To make a user-defined python module that you can import in many scripts,
+    you must place your module in one of the site-packages directories in `sys.path`.
+    If you are not using a virtual environment to run your programs in, then the correct
+    place for this is `~/.local/lib/python3.4/site-packages/`. It was meant for exactly
+    this purpose; see [PEP 370](https://www.python.org/dev/peps/pep-0370/). If you
+    are using a virtualenv, then you could simply create a symbolic link in the virtualenv
+    site-packages directory to your module. Or you could install your module in `/usr/lib/python3.4`
+    with sudo privileges (probably not a good idea though). There should be a way
+    to get virtualenv to look in `~/.local` as well, but I have not yet figured this
+    out.
+  tags:
+  - log message
+  - python
+  - user defined
+  - module
+  - package
+  time: 2016-07-12 13:20:11 -0400
+  title: Log message
+- message: To make virtualenv find your user-defined module, assuming you are using
+    virtualenvwrapper, you can simply use the [`add2virtualenv`](http://virtualenvwrapper.readthedocs.io/en/latest/command_ref.html#add2virtualenv)
+    command.
+  tags:
+  - log message
+  - python
+  - user defined modules
+  - virtualenv
+  - wrapper
+  time: 2016-07-12 13:26:18 -0400
+  title: Log message
+- message: For more general info on making and installing your own packages, take
+    a look at [this page](http://www.scipy-lectures.org/intro/language/reusing_code.html).
+  tags:
+  - log message
+  - python
+  - user defined modules
+  time: 2016-07-12 13:31:42 -0400
+  title: Log message
+- message: Get ls to sort by file extension using `ls -X`. I have added this to `.bashrc`
+    so this is now the default. If you want the usual directory listing, for instance
+    while perusing a directory with a lot of files of different file type, use `ls
+    -U`.
+  tags:
+  - log message
+  - ls
+  - sort
+  - file extension
+  time: 2016-07-13 20:04:21 -0400
+  title: Log message
+- message: The `which` program used by Fedora/CentOS/RHEL is far more advanced than
+    that used by Debian/Ubuntu. Get the Fedora version [here](https://carlowood.github.io/which/).
+    I have also created an alias for the Fedora version in bash_aliases, which shows
+    you aliases and functions. _Very_ useful.
+  tags:
+  - log message
+  - which
+  - rhel
+  - ubuntu
+  time: 2016-07-14 14:31:17 -0400
+  title: Log message
+- message: For an introduction to extending python using C, via PyObject and the like,
+    take a look at [this](http://dan.iel.fm/posts/python-c-extensions/) tutorial.
+  tags:
+  - log message
+  - python
+  - c
+  - extensions
+  time: 2016-07-16 11:26:47 -0400
+  title: Log message
+- message: 'Installation instructions for vtk are terribly hard to find. [Here](http://www.vtk.org/Wiki/VTK/Configure_and_Build)
+    they are: from the public wiki.'
+  tags:
+  - log message
+  - vtk
+  - mayavi
+  - install
+  time: 2016-08-06 17:04:42 -0400
+  title: Log message
+- message: To make vim display italicised text, see [this](http://www.nerdyweekly.com/posts/enable-italic-text-vim-tmux-gnome-terminal/)
+    wonderful blog entry. Essentially, we need to manually map the escape sequences
+    to the keywords `sitm` and `ritm`, which are used by vim to set and remove italic
+    mode respectively. The file in question, `xterm-256color-italic.terminfo`, has
+    been added to the `misc` repository as well. It contains all relevant install
+    info. Note that `TERM` must be set to `xterm-256color-italic` by `gnome-terminal`
+    for this to take effect. [This](http://askubuntu.com/questions/233280/gnome-terminal-reports-term-to-be-xterm)
+    askubuntu question tells you how to do it. Set the command executed by `gnome-terminal`
+    to be `env TERM=xterm-256color-italic /bin/bash`.
+  tags:
+  - log message
+  - vim
+  - italics
+  - comments
+  time: 2016-09-12 18:23:07 -0400
+  title: Log message
+- message: If you want to export from vim to a pdf file with syntax highlighting,
+    hardcopy does not seem to use the correct syntax highlighting file. Or rather,
+    it uses GUI settings, which means that unless your syntax highlighting file takes
+    care of looking good on gvim, it will not give you a good result. For you to get
+    syntax highlighting _at all_, you must first `:set term=xterm-256color-italic`
+    even if it is already set. Do it even if `:set term` returns `xterm-256color-italic`.
+    Then, to actually get _terminal colours_, use `:TOhtml`, which converts the file
+    into an html page, which you can then print from your browser. For a good print
+    colorscheme, run `:colorscheme print`, which is is a custom light-background colorscheme
+    I made for printing. Do this before running `:TOhtml`, obviously.
+  tags:
+  - log message
+  - vim
+  - print
+  - hardcopy
+  - syntax-highlighting
+  - colorscheme
+  time: 2016-09-13 14:07:40 -0400
+  title: Log message
+- message: If you want to build your static website yourself, and then push only the
+    pages _generated_ by Jekyll to GitHub, you need to _build_ and not _serve_. The
+    `jekyll build` command will use the `url` configuration from `_config.yml` when
+    resolving `absolute_url`s. The `jekyll serve` command will use `http://localhost:4000`,
+    regardless of what `url` is. Hence, _build_ and then push.
+  tags:
+  - log message
+  - jekyll
+  - url
+  time: 2017-03-07 19:47:05 -0500
+  title: Log message
+- message: 'I ran into issues with Numpy+MKL again when I upgraded numpy. `pip3 install
+    --upgrade numpy` does not respect `~/.numpy-site.cfg` once again. This is probably
+    because pip just installs binaries, instead of running `setup.py` and compiling
+    from source. You have to force a recompilation by using `pip3 install --no-binary
+    :all: numpy` in order to make it work. If needed, throw in a `--ignore-installed`
+    as well. Refer [this](https://stackoverflow.com/a/41984963/525169) SO answer.'
+  tags:
+  - log message
+  - pip
+  - numpy
+  - mkl
+  - force compile
+  time: 2017-06-12 02:05:38 -0400
+  title: Log message
+- message: Profiling python code is really easy! Just run your script with `python
+    -m cProfile <script.py>`. This will print a list of functions, their call statistics
+    and the amount of time taken by them cumulatively and per call. If you want to
+    sort your output by the amount of time each function took, use `python -m cProfile
+    -s tottime <script.py>`. Look [here](https://docs.python.org/3.6/library/profile.html#pstats.Stats.sort_stats)
+    for the list of possible sort options. You will probably want `tottime`. Also
+    see [this](https://stackoverflow.com/q/582336/525169) SO question.
+  tags:
+  - log message
+  - python
+  - profiling
+  - cProfile
+  time: 2017-06-13 04:16:30 -0400
+  title: Log message
+- message: 'To better visualize the call tree after profiling a python script, first
+    save your output from cProfile using `python -m cProfile -o <myscript.profile>
+    <myscript.py>`. You will need to install [`pyprof2calltree`](https://pypi.python.org/pypi/pyprof2calltree/)
+    via pip and `kcachegrind` via apt. Then, visualize the profile data with `pyprof2calltree
+    -i <myscript.profile> -k`. Reference: [this](https://stackoverflow.com/a/3561512/525169)
+    SO answer.'
+  tags:
+  - log message
+  - python
+  - profiling
+  - visualization
+  - kcachegrind
+  time: 2017-06-13 04:21:16 -0400
+  title: Log message
+- message: 'It is really easy to step into debug mode in a python script. Simply add
+    `import pdb; pdb.set_trace()` at any point in your script and you will have effectively
+    created a breakpoint. Your script will slide into a debugging session with a python
+    prompt. Watch out though: there are several single-letter commands which will
+    override your variable names. For instance, `b` stands for break or something
+    like that, so if you have a variable called `b`, you will not be able to inspect
+    it. Use `exec("print(b)")` in all such cases, to side-step this issue.'
+  tags:
+  - log message
+  - python
+  - debugging
+  - pdb
+  time: 2017-06-15 02:20:44 -0400
+  title: Log message
+- message: Sometimes, a python script just gives up and hangs. Even Ctrl-C does not
+    exit the program. You do not have to have a loop with a catch-all `except` command
+    or anything. Apparently, this can happen because of what is known as a "deadlock",
+    which refers to some kind of race condition when running a threaded program. I
+    was not running a threaded program, except I *was*, because I was using BLAS.
+    In this case, OpenBLAS, which appears to have had a history with deadlocks, and
+    maybe still does, or maybe it was due to my having accidentally installed numpy
+    with MKL and scipy with OpenBLAS. In any event, the only reason I found out that
+    the issue was with blas.py is thanks to [this excellent little piece of software](https://pypi.python.org/pypi/hanging_threads/2.0.3),
+    which shows you a stack trace if your program is inactive for more than 10 seconds.
+    It is a python package called [`hanging_threads`](https://github.com/niccokunzmann/hanging_threads)
+    and works like a charm. This invaluable tool was found after I finally figured
+    out what to google for, and landed on [this SO page](https://stackoverflow.com/q/3443607/525169),
+    and then scrolled down a lot after the top answer (`trace`) did not work for me.
+    [`trace`](https://docs.python.org/3.4/library/trace.html) is a python module and
+    is also really useful. It prints out the commands currently being executed. This
+    is really neat because if your program suddenly (and hopefully deterministically)
+    gives up, you get a full history of all the commands executed. The `--ignore-dir`
+    flag is extremely useful, since you can avoid printing out various internal modules.
+    I was lucky, since my packages of interest (`sht`, `cross_validation`, etc.) were
+    under `$HOME/.local`, so I could just supply `--ignore-dir=/usr` and prevent tracing
+    through imports like `sys` and `numpy`.
+  tags:
+  - log message
+  - python
+  - deadlock
+  - hanging
+  - stuck
+  - trace
+  time: 2017-06-15 02:38:01 -0400
+  title: Log message
+- message: 'Note to self: when you get time, figure out how to do logging, as a general
+    practice: [here](https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/)
+    is a nice link to get you started.'
+  tags:
+  - log message
+  - python
+  - logging
+  time: 2017-06-15 02:40:45 -0400
+  title: Log message
