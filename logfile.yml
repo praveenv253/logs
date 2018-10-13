@@ -1351,3 +1351,11 @@
   - logging
   time: 2017-06-15 02:40:45 -0400
   title: Log message
+- message: This is a test of the new python logging/blogging script.
+  tags:
+  - log message
+  - test
+  - python
+  - log
+  time: 2018-10-13 14:32:05 -0400
+  title: Testing new python log script
