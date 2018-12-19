@@ -1359,3 +1359,17 @@
   - log
   time: 2018-10-13 14:32:05 -0400
   title: Testing new python log script
+- message: Apparently, installing Anaconda messes up gitk's fonts, because Anaconda
+    comes with its own libtk, which is not compiled with Freetype fonts, and which
+    overrides the system libtk. [This SO question](https://stackoverflow.com/q/48786593/5251690)
+    has a workaround based on renaming some `wish` file, but I'm not sure what else
+    it breaks. The edit that says the old answer doesn't apply can be ignored; it
+    still works.
+  tags:
+  - log message
+  - gitk
+  - tkinter
+  - font
+  - anaconda
+  time: 2018-12-19 17:17:34 +0530
+  title: Fix gitk/tkinter fonts after Anaconda install
